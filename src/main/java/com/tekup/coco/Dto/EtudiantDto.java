@@ -12,7 +12,7 @@ import java.util.List;
 public class EtudiantDto {
     private String specialite;
     private String classe;
-    private String adress_email;
+    private String adress_domicil;
 
     public static EtudiantDto fromEntity(Etudiant etudiant) {
         if (etudiant == null) {
@@ -22,7 +22,7 @@ public class EtudiantDto {
                 EtudiantDto.builder()
                         .specialite(etudiant.getSpecialite())
                         .classe(etudiant.getClasse())
-                        .adress_email(etudiant.getAdress_email())
+                        .adress_domicil(etudiant.getAdress_domicil())
                         .build();
     }
 
@@ -34,7 +34,7 @@ public class EtudiantDto {
         Etudiant etudiant = new Etudiant();
         etudiant.setSpecialite(etudiantDto.getSpecialite());
         etudiant.setClasse(etudiantDto.getClasse());
-        etudiant.setAdress_email(etudiantDto.getAdress_email());
+        etudiant.setAdress_domicil(etudiantDto.getAdress_domicil());
 
 
         return etudiant;

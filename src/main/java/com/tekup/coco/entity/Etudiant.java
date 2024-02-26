@@ -15,7 +15,7 @@ public class Etudiant extends User {
     private Long id;
     private String specialite;
     private String classe;
-    private String adress_email;
+    private String adress_domicil;
     @OneToMany
     List<Demande_visite> demandeVisites = new ArrayList<>();
 
