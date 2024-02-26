@@ -13,6 +13,9 @@ public class Etudiant extends User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String specialite;
+    private String classe;
+    private String adress_email;
     @OneToMany
     List<Demande_visite> demandeVisites = new ArrayList<>();
 
