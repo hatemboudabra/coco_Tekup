@@ -10,4 +10,5 @@ public class AnnonceCovoiturage extends Annonce{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
 }

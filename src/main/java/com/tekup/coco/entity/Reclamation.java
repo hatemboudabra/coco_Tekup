@@ -3,8 +3,11 @@ package com.tekup.coco.entity;
 import com.tekup.coco.entity.enummeration.Status;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+
 @Entity
 @Data
 @Table(name = "Reclamation")
@@ -13,9 +16,14 @@ public class Reclamation implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String text_recl;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDateTime CreatedAt;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDateTime   ConsultAt;
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     private Status type_reclamation;
     @ManyToOne
-     User user;
+    @JoinColumn(name = "iduser")
+    private User user;
 }
