@@ -1,5 +1,6 @@
 package com.tekup.coco.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -12,9 +13,8 @@ public class Reservation implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String status;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-    @ManyToOne
-    private Annonce annonce;
+    @OneToOne
+    User user;
+    //@ManyToOne
+   // private Annonce annonce;
 }

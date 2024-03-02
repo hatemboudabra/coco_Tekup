@@ -20,8 +20,9 @@ public class User implements Serializable {
     @OneToOne
     private Message message;
     @OneToMany
-     List<Reclamation> reclamationList= new ArrayList<>();
+     List<Reclamation> reclamationList ;
     @OneToMany
-    private List<Annonce> annonceList = new ArrayList<>();
+    private List<AnnonceCovoiturage> annonceCovoiturageList ;
+
 
 }

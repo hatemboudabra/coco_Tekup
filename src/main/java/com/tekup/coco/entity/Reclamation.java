@@ -1,5 +1,6 @@
 package com.tekup.coco.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tekup.coco.entity.enummeration.Status;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -26,4 +27,10 @@ public class Reclamation implements Serializable {
     @ManyToOne
     @JoinColumn(name = "iduser")
     private User user;
+    @ManyToOne
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    AnnonceCovoiturage annonceCovoiturage;
+    @ManyToOne
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    AnnonceCollocation annonceCollocation;
 }

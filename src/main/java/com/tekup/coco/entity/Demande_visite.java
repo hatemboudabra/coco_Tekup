@@ -17,4 +17,6 @@ public class Demande_visite implements Serializable {
     private String status;
     @ManyToOne
     private Etudiant etudiant;
+    @OneToOne
+    AnnonceCollocation annonceCollocation;
 }

@@ -13,7 +13,6 @@ public class Message implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private Long id_receiver;
     private String message;
     private Date datesend;
