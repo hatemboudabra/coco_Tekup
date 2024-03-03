@@ -5,6 +5,9 @@ import com.tekup.coco.repository.AnnonceCovoiturageRepo;
 import com.tekup.coco.services.AnnonceCovoiturageService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class AnnonceCovoiturageServiceImpl implements AnnonceCovoiturageService {
     private final AnnonceCovoiturageRepo annonceCovoiturageRepo;
@@ -20,17 +23,22 @@ public class AnnonceCovoiturageServiceImpl implements AnnonceCovoiturageService 
     }
 
     @Override
-    public AnnonceCovoiturageDto findById(Integer id) {
+    public AnnonceCovoiturageDto findById(Long id) {
         return null;
     }
 
     @Override
-    public AnnonceCovoiturageDto findAll() {
-        return null;
+    public List<AnnonceCovoiturageDto> findAll() {
+        return annonceCovoiturageRepo.findAll().stream()
+                .map(AnnonceCovoiturageDto::fromEntity)
+                .collect(Collectors.toList());
     }
+
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Long id) {
 
     }
+
+
 }
