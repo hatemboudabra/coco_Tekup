@@ -23,6 +23,10 @@ public class User implements Serializable {
      List<Reclamation> reclamationList ;
     @OneToMany
     private List<AnnonceCovoiturage> annonceCovoiturageList ;
+    @OneToMany
+    private  List<AnnonceCollocation> annonceCollocationList;
+    @OneToOne
+    private  Reservation reservation;
 
 
 }
