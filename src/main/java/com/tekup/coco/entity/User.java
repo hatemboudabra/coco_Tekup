@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data @NoArgsConstructor @AllArgsConstructor
@@ -33,7 +34,8 @@ public class User implements Serializable {
     private  List<AnnonceCollocation> annonceCollocationList;
     @OneToOne
     private  Reservation reservation;
-
+    @OneToMany
+    List<Notification> notificationList=new ArrayList<>();
     public User(Long id,String username,String password,boolean enabled,List<Role> roles) {
         this.id = id;
         this.username = username;

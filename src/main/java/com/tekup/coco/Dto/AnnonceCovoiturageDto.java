@@ -1,25 +1,24 @@
 package com.tekup.coco.Dto;
 
-import com.tekup.coco.entity.AnnonceCovoiturage;
-import com.tekup.coco.entity.User;
 import com.tekup.coco.entity.enummeration.Type_Covoiturage;
 import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.List;
 
 @Data
 @Builder
 public class AnnonceCovoiturageDto {
+
     private String designation;
     private Date heure_Depart;
     private String Lieu_depart;
     private Long nbrePlaceDisponible;
     private Type_Covoiturage typeCovoiturage;
     private UserDto userId;
-   // private Long reservationId;
-    public static AnnonceCovoiturageDto fromEntity(AnnonceCovoiturage annonceCovoiturage) {
+    // private Long reservationId;
+
+    /*public static AnnonceCovoiturageDto fromEntity(AnnonceCovoiturage annonceCovoiturage) {
         if (annonceCovoiturage == null) {
             return null;
 
@@ -31,7 +30,7 @@ public class AnnonceCovoiturageDto {
                 .Lieu_depart(annonceCovoiturage.getLieu_depart())
                 .nbrePlaceDisponible(annonceCovoiturage.getNbrePlaceDisponible())
                 .typeCovoiturage(annonceCovoiturage.getTypeCovoiturage())
-                .userId(UserDto.fromEntity(annonceCovoiturage.getUser()))
+                .userDto(UserDto.fromEntity(annonceCovoiturage.getUser()))
                 .build();
     }
 
@@ -47,10 +46,10 @@ public class AnnonceCovoiturageDto {
         annonceCovoiturage.setLieu_depart(annonceCovoiturageDto.getLieu_depart());
         annonceCovoiturage.setNbrePlaceDisponible(annonceCovoiturageDto.getNbrePlaceDisponible());
         annonceCovoiturage.setTypeCovoiturage(annonceCovoiturageDto.getTypeCovoiturage());
-        annonceCovoiturage.setUser(UserDto.toEntity(annonceCovoiturageDto.getUserId()));
+        annonceCovoiturage.setUser(UserDto.toEntity(annonceCovoiturageDto.userDto));
 
 
         return annonceCovoiturage;
     }
-
+*/
 }

@@ -16,7 +16,7 @@ public class ReclamationDto {
     private LocalDateTime  ConsultAt;
     private Status type_reclamation;
     private UserDto user;
-
+/*
     public static ReclamationDto fromEntity(Reclamation reclamation) {
         if (reclamation == null) {
             return null;
@@ -47,4 +47,6 @@ public class ReclamationDto {
 
 
     }
+
+ */
 }
