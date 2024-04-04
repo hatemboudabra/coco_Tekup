@@ -29,7 +29,7 @@ public class SecurityConfig {
                     @Override
                     public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                         CorsConfiguration cors = new CorsConfiguration();
-                        cors.setAllowedOrigins(Collections.singletonList("http://localhost:9093"));
+                        cors.setAllowedOrigins(Collections.singletonList("*"));
                         cors.setAllowedMethods(Collections.singletonList("*"));
                         cors.setAllowedHeaders(Collections.singletonList("*"));
                         cors.setExposedHeaders(Collections.singletonList("Authorization"));
@@ -37,8 +37,7 @@ public class SecurityConfig {
                         return cors;
                     }
                 }))
-                .authorizeHttpRequests(requests->requests.requestMatchers("/login","/register").
-                        permitAll()
+                .authorizeHttpRequests(requests->requests.requestMatchers("/login","/register").permitAll()
                         .requestMatchers("/all").hasAuthority("ADMIN")
                         .anyRequest().authenticated())
                 .addFilterBefore(new JWTAuthenticationFilter(authenticationMgr),
