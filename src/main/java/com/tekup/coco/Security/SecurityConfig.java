@@ -37,7 +37,9 @@ public class SecurityConfig {
                         return cors;
                     }
                 }))
-                .authorizeHttpRequests(requests->requests.requestMatchers("/login","/register","/add","/addRole/{username}/{rolename}").
+
+                .authorizeHttpRequests(requests->requests.requestMatchers("/login","/register","/add","/addRole/{username}/{rolename}","addNotification","addAnnonce").
+
                         permitAll()
                         .requestMatchers("/all").hasAuthority("ADMIN")
                         .anyRequest().authenticated())

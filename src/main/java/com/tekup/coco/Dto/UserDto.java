@@ -14,7 +14,7 @@ public class UserDto {
     private String password;
     private List<ReclamationDto> reclamationDtoList;
 
-
+/*
     public static UserDto fromEntity(User user) {
         if (user == null) {
             return null;
@@ -42,4 +42,6 @@ public class UserDto {
 
         return user;
     }
+
+ */
 }
