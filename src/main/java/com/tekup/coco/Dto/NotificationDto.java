@@ -13,7 +13,6 @@ public class NotificationDto {
     private Long id;
     private String message;
     private Date sendDate;
-    private Long idEmprunt;
     private Long idReservation;
     private Long idUser;
 }

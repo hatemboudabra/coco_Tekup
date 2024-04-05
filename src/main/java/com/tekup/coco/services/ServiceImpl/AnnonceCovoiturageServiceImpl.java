@@ -1,11 +1,14 @@
 package com.tekup.coco.services.ServiceImpl;
 
 import com.tekup.coco.Dto.AnnonceCovoiturageDto;
+import com.tekup.coco.Dto.UserDto;
 import com.tekup.coco.entity.AnnonceCovoiturage;
+import com.tekup.coco.entity.Notification;
 import com.tekup.coco.entity.User;
 import com.tekup.coco.repository.AnnonceCovoiturageRepo;
 import com.tekup.coco.repository.UserRepo;
 import com.tekup.coco.services.AnnonceCovoiturageService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +17,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class AnnonceCovoiturageServiceImpl implements AnnonceCovoiturageService {
     private final AnnonceCovoiturageRepo annonceCovoiturageRepo;
     private final UserRepo userRepository;
+
     @Autowired
     public AnnonceCovoiturageServiceImpl(AnnonceCovoiturageRepo annonceCovoiturageRepo, UserRepo userRepository) {
         this.annonceCovoiturageRepo = annonceCovoiturageRepo;
@@ -27,7 +32,7 @@ public class AnnonceCovoiturageServiceImpl implements AnnonceCovoiturageService 
     @Override
     public AnnonceCovoiturage addAnnonce(AnnonceCovoiturageDto annonceCovoiturageDto) {
         AnnonceCovoiturage annonceCovoiturage = new AnnonceCovoiturage();
-        annonceCovoiturage.setDesignation(annonceCovoiturage.getDesignation());
+        annonceCovoiturage.setDesignation(annonceCovoiturageDto.getDesignation());
         annonceCovoiturage.setHeure_Depart(annonceCovoiturageDto.getHeure_Depart());
         annonceCovoiturage.setLieu_depart(annonceCovoiturageDto.getLieu_depart());
         annonceCovoiturage.setNbrePlaceDisponible(annonceCovoiturageDto.getNbrePlaceDisponible());
@@ -85,5 +90,7 @@ public class AnnonceCovoiturageServiceImpl implements AnnonceCovoiturageService 
     public void delete(Long id) {
         annonceCovoiturageRepo.deleteById(id);
     }
+
+
 
 }

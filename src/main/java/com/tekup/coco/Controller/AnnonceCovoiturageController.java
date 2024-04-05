@@ -12,7 +12,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/AnnonceCovoiturage")
+@RequestMapping("/api")
 public class AnnonceCovoiturageController {
     private final AnnonceCovoiturageServiceImpl annonceCovoiturageService;
     @Autowired
@@ -20,7 +20,7 @@ public class AnnonceCovoiturageController {
         this.annonceCovoiturageService = annonceCovoiturageService;
     }
     @PostMapping(path = "/addAnnonce")
-     public AnnonceCovoiturage addAnnonce (AnnonceCovoiturageDto annonceCovoiturageDto){
+     public AnnonceCovoiturage addAnnonce(@RequestBody AnnonceCovoiturageDto annonceCovoiturageDto){
         return annonceCovoiturageService.addAnnonce(annonceCovoiturageDto);
     }
     @GetMapping
