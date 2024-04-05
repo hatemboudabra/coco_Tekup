@@ -2,7 +2,6 @@ package com.tekup.coco.Dto;
 
 import com.tekup.coco.entity.enummeration.Type_Covoiturage;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

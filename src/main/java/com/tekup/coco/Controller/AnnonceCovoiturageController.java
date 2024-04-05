@@ -33,4 +33,9 @@ public class AnnonceCovoiturageController {
         return new ResponseEntity<String>("Annonce deleted successfully!.", HttpStatus.OK);
     }
 
+    @GetMapping("/bylieu")
+    public  List<AnnonceCovoiturage> findByLieuDepart(String lieuDepart){
+        return annonceCovoiturageService.findByLieuDepart(lieuDepart);
+    }
+
 }

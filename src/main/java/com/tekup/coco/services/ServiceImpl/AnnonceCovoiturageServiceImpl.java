@@ -91,9 +91,7 @@ public class AnnonceCovoiturageServiceImpl implements AnnonceCovoiturageService 
         annonceCovoiturageRepo.deleteById(id);
     }
 
-    public List<AnnonceCovoiturage> rechercherAnnoncesParUtilisateur(Long userId) {
-        return  annonceCovoiturageRepo.rechercherAnnoncesParUtilisateur(userId);
-    }
+
     public  List<AnnonceCovoiturage> findByLieuDepart(String lieuDepart){
         return annonceCovoiturageRepo.findByLieuDepart(lieuDepart);
     }

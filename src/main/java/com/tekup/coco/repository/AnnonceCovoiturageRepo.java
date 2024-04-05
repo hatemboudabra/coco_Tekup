@@ -17,10 +17,10 @@ import java.util.Optional;
 public interface AnnonceCovoiturageRepo extends JpaRepository<AnnonceCovoiturage,Long> {
 
 
-    @Query("SELECT a FROM AnnonceCovoiturage a WHERE a.Lieu_depart = :lieuDepart")
+    @Query("SELECT a FROM AnnonceCovoiturage a WHERE a.lieu_depart = :lieuDepart")
     List<AnnonceCovoiturage> findByLieuDepart(@Param("lieuDepart") String lieuDepart);
-
-@Query("SELECT a FROM AnnonceCovoiturage a WHERE a.userId = :userId")
+/*
+    @Query("SELECT a FROM AnnonceCovoiturage a WHERE a.userId = :userId")
 List<AnnonceCovoiturage> rechercherAnnoncesParUtilisateur(@Param("userId") Long userId);
-
+*/
 }
