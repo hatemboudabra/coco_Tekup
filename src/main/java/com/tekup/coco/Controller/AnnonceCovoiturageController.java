@@ -34,8 +34,12 @@ public class AnnonceCovoiturageController {
     }
 
     @GetMapping("/bylieu")
-    public  List<AnnonceCovoiturage> findByLieuDepart(String lieuDepart){
+    public List<AnnonceCovoiturage> findByLieuDepart(@RequestParam String lieuDepart) {
         return annonceCovoiturageService.findByLieuDepart(lieuDepart);
+    }
+    @GetMapping("/byUser")
+    public List<AnnonceCovoiturage> rechercherAnnoncesParUtilisateur(@RequestParam Long userId){
+        return annonceCovoiturageService.rechercherAnnoncesParUtilisateur(userId);
     }
 
 }

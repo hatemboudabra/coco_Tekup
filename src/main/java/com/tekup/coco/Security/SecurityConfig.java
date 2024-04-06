@@ -38,7 +38,7 @@ public class SecurityConfig {
                     }
                 }))
 
-                .authorizeHttpRequests(requests->requests.requestMatchers("/login","/register","/add","/addRole/{username}/{rolename}","addNotification","addAnnonce").
+                .authorizeHttpRequests(requests->requests.requestMatchers("/login","/register","/add","/addRole/{username}/{rolename}","addNotification","addAnnonce","/byUser").
 
                         permitAll()
                         .requestMatchers("/all").hasAuthority("ADMIN")
@@ -50,4 +50,6 @@ public class SecurityConfig {
 
         return http.build();
     }
+
+
 }

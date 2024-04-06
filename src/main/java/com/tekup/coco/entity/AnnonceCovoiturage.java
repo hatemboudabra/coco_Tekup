@@ -23,13 +23,13 @@ public class AnnonceCovoiturage implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     private Type_Covoiturage typeCovoiturage;
-    @ManyToOne
+    @ManyToOne()
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     User user;
-    @ManyToOne
+    @ManyToOne()
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     Reservation reservation;
-    @OneToMany
+    @OneToMany()
     List<Reclamation> reclamationList;
 
 }

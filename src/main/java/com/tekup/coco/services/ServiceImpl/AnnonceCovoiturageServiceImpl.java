@@ -1,9 +1,7 @@
 package com.tekup.coco.services.ServiceImpl;
 
 import com.tekup.coco.Dto.AnnonceCovoiturageDto;
-import com.tekup.coco.Dto.UserDto;
 import com.tekup.coco.entity.AnnonceCovoiturage;
-import com.tekup.coco.entity.Notification;
 import com.tekup.coco.entity.User;
 import com.tekup.coco.repository.AnnonceCovoiturageRepo;
 import com.tekup.coco.repository.UserRepo;
@@ -14,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -27,8 +24,6 @@ public class AnnonceCovoiturageServiceImpl implements AnnonceCovoiturageService 
         this.annonceCovoiturageRepo = annonceCovoiturageRepo;
         this.userRepository = userRepository;
     }
-
-
     @Override
     public AnnonceCovoiturage addAnnonce(AnnonceCovoiturageDto annonceCovoiturageDto) {
         AnnonceCovoiturage annonceCovoiturage = new AnnonceCovoiturage();
@@ -37,14 +32,13 @@ public class AnnonceCovoiturageServiceImpl implements AnnonceCovoiturageService 
         annonceCovoiturage.setLieu_depart(annonceCovoiturageDto.getLieu_depart());
         annonceCovoiturage.setNbrePlaceDisponible(annonceCovoiturageDto.getNbrePlaceDisponible());
         annonceCovoiturage.setTypeCovoiturage(annonceCovoiturageDto.getTypeCovoiturage());
-        User user = userRepository.findById(annonceCovoiturageDto.getUserId()).get();
+        User user = userRepository.findById(annonceCovoiturageDto.getIdUSEr()).get();
         annonceCovoiturage.setUser(user);
         annonceCovoiturage = annonceCovoiturageRepo.save(annonceCovoiturage);
         user.getAnnonceCovoiturageList().add(annonceCovoiturage);
         userRepository.save(user);
         return annonceCovoiturage;
     }
-
     @Override
     public AnnonceCovoiturage updateAnnonce(Long id, AnnonceCovoiturageDto annonceCovoiturageDto) {
         Optional<AnnonceCovoiturage> optionalAnnonceCovoiturage = annonceCovoiturageRepo.findById(id);
@@ -56,7 +50,7 @@ public class AnnonceCovoiturageServiceImpl implements AnnonceCovoiturageService 
             annonceCovoiturage.setNbrePlaceDisponible(annonceCovoiturageDto.getNbrePlaceDisponible());
             annonceCovoiturage.setTypeCovoiturage(annonceCovoiturageDto.getTypeCovoiturage());
 
-            User user = userRepository.findById(annonceCovoiturageDto.getUserId()).orElse(null);
+            User user = userRepository.findById(annonceCovoiturageDto.getIdUSEr()).orElse(null);
             if (user != null) {
                 if (annonceCovoiturage.getUser() != null) {
                     annonceCovoiturage.getUser().getAnnonceCovoiturageList().remove(annonceCovoiturage);
@@ -73,26 +67,22 @@ public class AnnonceCovoiturageServiceImpl implements AnnonceCovoiturageService 
             return null;
         }
     }
-
-
     @Override
     public Optional<AnnonceCovoiturage> findById(Long id) {
         return annonceCovoiturageRepo.findById(id);
     }
-
-
     @Override
     public List<AnnonceCovoiturage> findAll() {
         return annonceCovoiturageRepo.findAll();
     }
-
     @Override
     public void delete(Long id) {
         annonceCovoiturageRepo.deleteById(id);
     }
-
-
     public  List<AnnonceCovoiturage> findByLieuDepart(String lieuDepart){
         return annonceCovoiturageRepo.findByLieuDepart(lieuDepart);
+    }
+     public List<AnnonceCovoiturage> rechercherAnnoncesParUtilisateur(Long userId){
+        return annonceCovoiturageRepo.findAnnonceCovoiturageByUserId(userId);
     }
 }

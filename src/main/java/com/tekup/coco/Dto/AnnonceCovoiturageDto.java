@@ -16,10 +16,11 @@ public class AnnonceCovoiturageDto {
     private String lieu_depart;
     private Long nbrePlaceDisponible;
     private Type_Covoiturage typeCovoiturage;
-    private Long userId;
+    private Long idUSEr;
     // private Long reservationId;
 
-    /*public static AnnonceCovoiturageDto fromEntity(AnnonceCovoiturage annonceCovoiturage) {
+    /*
+    public static AnnonceCovoiturageDto fromEntity(AnnonceCovoiturage annonceCovoiturage) {
         if (annonceCovoiturage == null) {
             return null;
 
