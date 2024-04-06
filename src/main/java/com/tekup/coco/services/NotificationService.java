@@ -13,4 +13,6 @@ public interface NotificationService {
 
     public Notification updateNotification(Long notificationId, NotificationDto updatedNotificationDto);
     public void deleteNotification(Long id);
+    List <Notification> trierNotificationParDate();
+
 }

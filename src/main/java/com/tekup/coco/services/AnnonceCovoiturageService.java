@@ -3,6 +3,7 @@ package com.tekup.coco.services;
 import com.tekup.coco.Dto.AnnonceCovoiturageDto;
 import com.tekup.coco.Dto.UserDto;
 import com.tekup.coco.entity.AnnonceCovoiturage;
+import com.tekup.coco.entity.Notification;
 import com.tekup.coco.entity.User;
 
 import java.util.List;
@@ -14,5 +15,6 @@ public interface AnnonceCovoiturageService {
     public Optional<AnnonceCovoiturage> findById(Long id);
     List<AnnonceCovoiturage> findAll();
     void delete(Long id);
+    List <AnnonceCovoiturage> trierAnnonceCovoiturageParDate();
 
 }
