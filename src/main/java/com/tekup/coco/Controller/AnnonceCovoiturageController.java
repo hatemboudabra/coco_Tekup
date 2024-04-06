@@ -2,6 +2,7 @@ package com.tekup.coco.Controller;
 
 import com.tekup.coco.Dto.AnnonceCovoiturageDto;
 import com.tekup.coco.entity.AnnonceCovoiturage;
+import com.tekup.coco.entity.Notification;
 import com.tekup.coco.services.ServiceImpl.AnnonceCovoiturageServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,5 +42,9 @@ public class AnnonceCovoiturageController {
     public List<AnnonceCovoiturage> rechercherAnnoncesParUtilisateur(@RequestParam Long userId){
         return annonceCovoiturageService.rechercherAnnoncesParUtilisateur(userId);
     }
+    @GetMapping("/sortAnnoncebyDate")
+    public List<AnnonceCovoiturage>trierAnnonceCovoiturageParDate(){
+        return  annonceCovoiturageService.trierAnnonceCovoiturageParDate();
 
+    }
 }
