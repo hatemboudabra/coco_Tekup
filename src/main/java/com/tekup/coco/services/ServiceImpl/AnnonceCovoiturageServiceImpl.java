@@ -85,7 +85,7 @@ public class AnnonceCovoiturageServiceImpl implements AnnonceCovoiturageService 
     @Override
     public List<AnnonceCovoiturage> trierAnnonceCovoiturageParDate() {
         List<AnnonceCovoiturage>annonceCovoiturages = annonceCovoiturageRepo.findAll();
-        return  annonceCovoiturages.stream().sorted(Comparator.comparing(AnnonceCovoiturage::getHeure_Depart))
+        return  annonceCovoiturages.stream().sorted(Comparator.comparing(AnnonceCovoiturage::getHeure_Depart).reversed())
                 .collect(Collectors.toList());
     }
 

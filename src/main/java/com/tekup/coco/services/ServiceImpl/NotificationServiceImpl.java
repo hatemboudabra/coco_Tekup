@@ -91,7 +91,7 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public List<Notification> trierNotificationParDate() {
         List<Notification> notificationss =notificationReppository.findAll();
-        return notificationss.stream().sorted(Comparator.comparing(Notification::getSendDate))
+        return notificationss.stream().sorted(Comparator.comparing(Notification::getSendDate).reversed())
                 .collect(Collectors.toList());
     }
 
