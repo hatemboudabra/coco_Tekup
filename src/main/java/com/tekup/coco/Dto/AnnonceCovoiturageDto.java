@@ -2,7 +2,6 @@ package com.tekup.coco.Dto;
 
 import com.tekup.coco.entity.enummeration.Type_Covoiturage;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,10 +16,11 @@ public class AnnonceCovoiturageDto {
     private String lieu_depart;
     private Long nbrePlaceDisponible;
     private Type_Covoiturage typeCovoiturage;
-    private Long userId;
+    private Long idUSEr;
     // private Long reservationId;
 
-    /*public static AnnonceCovoiturageDto fromEntity(AnnonceCovoiturage annonceCovoiturage) {
+    /*
+    public static AnnonceCovoiturageDto fromEntity(AnnonceCovoiturage annonceCovoiturage) {
         if (annonceCovoiturage == null) {
             return null;
 
