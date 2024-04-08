@@ -5,6 +5,7 @@ import com.tekup.coco.entity.User;
 import com.tekup.coco.services.register.RegistationRequest;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserService {
     User saveUser(User user);

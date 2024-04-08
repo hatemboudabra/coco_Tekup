@@ -7,6 +7,7 @@ import com.tekup.coco.entity.Notification;
 import com.tekup.coco.entity.User;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface AnnonceCovoiturageService {
@@ -16,5 +17,5 @@ public interface AnnonceCovoiturageService {
     List<AnnonceCovoiturage> findAll();
     void delete(Long id);
     List <AnnonceCovoiturage> trierAnnonceCovoiturageParDate();
-
+    Map<User, Integer> annoncesParUser();
 }

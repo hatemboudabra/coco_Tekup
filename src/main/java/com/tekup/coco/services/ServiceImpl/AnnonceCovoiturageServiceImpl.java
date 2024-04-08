@@ -10,9 +10,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -87,6 +85,19 @@ public class AnnonceCovoiturageServiceImpl implements AnnonceCovoiturageService 
         List<AnnonceCovoiturage>annonceCovoiturages = annonceCovoiturageRepo.findAll();
         return  annonceCovoiturages.stream().sorted(Comparator.comparing(AnnonceCovoiturage::getHeure_Depart).reversed())
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Map<User, Integer> annoncesParUser() {
+        List<AnnonceCovoiturage> annonces = annonceCovoiturageRepo.findAll();
+        Map<User, Integer> annoncesParUser = new HashMap<>();
+
+        for (AnnonceCovoiturage annonce : annonces) {
+            User user = annonce.getUser();
+            annoncesParUser.put(user, annoncesParUser.getOrDefault(user, 0) + 1);
+        }
+
+            return annoncesParUser;
     }
 
     public  List<AnnonceCovoiturage> findByLieuDepart(String lieuDepart){
