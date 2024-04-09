@@ -38,7 +38,7 @@ public class SecurityConfig {
                     }
                 }))
 
-                .authorizeHttpRequests(requests->requests.requestMatchers("/login","/register","/add","/addRole/{username}/{rolename}","addNotification","addAnnonce","/byUser").
+                .authorizeHttpRequests(requests->requests.requestMatchers("/login","/register","/add","/addRole/{username}/{rolename}","stats/users","addAnnonce","/byUser","userWithMostAnnouncements").
 
                         permitAll()
                         .requestMatchers("/all").hasAuthority("ADMIN")
