@@ -12,7 +12,17 @@ public class UserDto {
     private String username;
     private String email;
     private String password;
+    private int announcementCount;
+
     private List<ReclamationDto> reclamationDtoList;
+public  UserDto(){}
+    public UserDto(String username, String email, String password, int announcementCount, List<ReclamationDto> reclamationDtoList) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.announcementCount = announcementCount;
+        this.reclamationDtoList = reclamationDtoList;
+    }
 
 /*
     public static UserDto fromEntity(User user) {

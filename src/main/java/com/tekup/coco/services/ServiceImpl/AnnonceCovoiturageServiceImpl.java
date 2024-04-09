@@ -1,6 +1,7 @@
 package com.tekup.coco.services.ServiceImpl;
 
 import com.tekup.coco.Dto.AnnonceCovoiturageDto;
+import com.tekup.coco.Dto.UserDto;
 import com.tekup.coco.entity.AnnonceCovoiturage;
 import com.tekup.coco.entity.User;
 import com.tekup.coco.repository.AnnonceCovoiturageRepo;
@@ -10,9 +11,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -95,4 +94,42 @@ public class AnnonceCovoiturageServiceImpl implements AnnonceCovoiturageService 
      public List<AnnonceCovoiturage> rechercherAnnoncesParUtilisateur(Long userId){
         return annonceCovoiturageRepo.findAnnonceCovoiturageByUserId(userId);
     }
+    @Override
+    public Map<UserDto, Integer> annoncesParUserService() {
+        List<AnnonceCovoiturage> annonces = annonceCovoiturageRepo.findAll();
+        Map<UserDto, Integer> annoncesParUser = new HashMap<>();
+
+        for (AnnonceCovoiturage annonce : annonces) {
+            User user = annonce.getUser();
+            UserDto userDto = new UserDto();
+            userDto.setUsername(user.getUsername());
+            userDto.setEmail(user.getEmail());
+
+            annoncesParUser.put(userDto, annoncesParUser.getOrDefault(userDto, 0) + 1);
+        }
+
+        return annoncesParUser;
+    }@Override
+    public UserDto getUserAvecLePlusDAnnonces() {
+        Map<UserDto, Integer> annoncesParUser = annoncesParUserService();
+        UserDto userAvecLePlusDAnnonces = null;
+        int maxAnnonces = 0;
+
+        for (Map.Entry<UserDto, Integer> entry : annoncesParUser.entrySet()) {
+            UserDto userDto = entry.getKey();
+            Integer nombreAnnonces = entry.getValue();
+
+            if (nombreAnnonces > maxAnnonces) {
+                maxAnnonces = nombreAnnonces;
+                userAvecLePlusDAnnonces = userDto;
+            }
+        }
+
+        if (userAvecLePlusDAnnonces != null) {
+            userAvecLePlusDAnnonces.setAnnouncementCount(maxAnnonces);
+        }
+
+        return userAvecLePlusDAnnonces;
+    }
+
 }
