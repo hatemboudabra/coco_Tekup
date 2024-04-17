@@ -1,7 +1,9 @@
 package com.tekup.coco.services.ServiceImpl;
 
+import com.tekup.coco.entity.AnnonceCovoiturage;
 import com.tekup.coco.entity.Role;
 import com.tekup.coco.entity.User;
+import com.tekup.coco.repository.AnnonceCovoiturageRepo;
 import com.tekup.coco.repository.RoleRepo;
 import com.tekup.coco.repository.UserRepo;
 import com.tekup.coco.services.UserService;
@@ -12,9 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Transactional
 @Service
@@ -25,7 +25,8 @@ public class UserServiceImpl implements UserService {
         RoleRepo roleRep;
         @Autowired
         BCryptPasswordEncoder bCryptPasswordEncoder;
-        @Override
+
+    @Override
         public User saveUser(User user) {
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             return userRep.save(user);
@@ -70,5 +71,10 @@ public class UserServiceImpl implements UserService {
         public User findUserByUsername(String username) {
             return userRep.findByUsername(username);
         }
+
+
+
+
+
     }
 

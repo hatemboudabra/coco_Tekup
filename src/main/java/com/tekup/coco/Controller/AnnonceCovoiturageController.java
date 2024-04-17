@@ -1,8 +1,10 @@
 package com.tekup.coco.Controller;
 
 import com.tekup.coco.Dto.AnnonceCovoiturageDto;
+import com.tekup.coco.Dto.UserDto;
 import com.tekup.coco.entity.AnnonceCovoiturage;
 import com.tekup.coco.entity.Notification;
+import com.tekup.coco.entity.User;
 import com.tekup.coco.services.ServiceImpl.AnnonceCovoiturageServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -46,5 +49,18 @@ public class AnnonceCovoiturageController {
     public List<AnnonceCovoiturage>trierAnnonceCovoiturageParDate(){
         return  annonceCovoiturageService.trierAnnonceCovoiturageParDate();
 
+    }
+    @GetMapping("/stats/users")
+    public Map<UserDto, Integer> annoncesParUser() {
+        return annonceCovoiturageService.annoncesParUserService();
+    }
+    @GetMapping("/userWithMostAnnouncements")
+    public ResponseEntity<UserDto> getUserWithMostAnnouncements() {
+        UserDto userWithMostAnnouncements = annonceCovoiturageService.getUserAvecLePlusDAnnonces();
+        if (userWithMostAnnouncements != null) {
+            return ResponseEntity.ok(userWithMostAnnouncements);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

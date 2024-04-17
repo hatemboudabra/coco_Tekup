@@ -23,30 +23,31 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http)throws Exception{
         http.sessionManagement(session ->
-                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .csrf( csrf ->csrf.disable())
-            .cors(cors -> cors.configurationSource(new CorsConfigurationSource() {
-                @Override
-                public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
-                    CorsConfiguration cors = new CorsConfiguration();
-                    cors.setAllowedOrigins(Collections.singletonList("http://localhost:9093"));
-                    cors.setAllowedMethods(Collections.singletonList("*"));
-                    cors.setAllowedHeaders(Collections.singletonList("*"));
-                    cors.setExposedHeaders(Collections.singletonList("Authorization"));
 
-                    return cors;
-                }
-            }))
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .csrf( csrf ->csrf.disable())
+                .cors(cors -> cors.configurationSource(new CorsConfigurationSource() {
+                    @Override
+                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+                        CorsConfiguration cors = new CorsConfiguration();
+                        cors.setAllowedOrigins(Collections.singletonList("http://localhost:9093"));
+                        cors.setAllowedMethods(Collections.singletonList("*"));
+                        cors.setAllowedHeaders(Collections.singletonList("*"));
+                        cors.setExposedHeaders(Collections.singletonList("Authorization"));
 
-            .authorizeHttpRequests(requests->requests.requestMatchers("/login","/register","/add","/addRole/{username}/{rolename}","addNotification","addAnnonce","/byUser").
+                        return cors;
+                    }
+                }))
 
-                permitAll()
-                .requestMatchers("/all").hasAuthority("ADMIN")
-                .anyRequest().authenticated())
-            .addFilterBefore(new JWTAuthenticationFilter(authenticationMgr),
-                UsernamePasswordAuthenticationFilter.class)
-            .addFilterBefore(new JWTAuthorizationFilter(),
-                UsernamePasswordAuthenticationFilter.class);
+                .authorizeHttpRequests(requests->requests.requestMatchers("/login","/register","/add","/addRole/{username}/{rolename}","stats/users","addAnnonce","/byUser","userWithMostAnnouncements").
+
+                        permitAll()
+                        .requestMatchers("/all").hasAuthority("ADMIN")
+                        .anyRequest().authenticated())
+                .addFilterBefore(new JWTAuthenticationFilter(authenticationMgr),
+                        UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JWTAuthorizationFilter(),
+                        UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
