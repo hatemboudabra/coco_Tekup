@@ -1,10 +1,12 @@
 package com.tekup.coco.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Data
 @Table(name = "Reservation")
@@ -15,6 +17,8 @@ public class Reservation implements Serializable {
     private String status;
     @OneToOne
     User user;
-    //@ManyToOne
-   // private Annonce annonce;
+    @OneToMany
+    List<AnnonceCovoiturage> annonceCovoiturageList;
+    @OneToMany
+    List<Notification> notificationList=new ArrayList<>();
 }

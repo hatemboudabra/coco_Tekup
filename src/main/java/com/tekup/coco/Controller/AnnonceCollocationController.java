@@ -5,6 +5,8 @@ import com.tekup.coco.services.AnnonceCollocationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,7 +37,8 @@ public class AnnonceCollocationController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteAnnonce(@PathVariable Long id) {
+    public ResponseEntity<String> deleteAnnonce(@PathVariable Long id) {
         annonceCollocationService.deleteAnnonceById(id);
+        return new ResponseEntity<String>("Annonce deleted successfully!.", HttpStatus.OK);
     }
 }
