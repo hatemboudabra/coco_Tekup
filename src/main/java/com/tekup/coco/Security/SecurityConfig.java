@@ -23,6 +23,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http)throws Exception{
         http.sessionManagement(session ->
+
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf( csrf ->csrf.disable())
                 .cors(cors -> cors.configurationSource(new CorsConfigurationSource() {
