@@ -1,4 +1,4 @@
-package com.tekup.coco.Config;
+package com.tekup.coco.config;
 
 
 import io.swagger.v3.oas.models.OpenAPI;
