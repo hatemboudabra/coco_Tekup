@@ -20,12 +20,12 @@ import java.util.Collections;
 public class SecurityConfig {
     @Autowired
     AuthenticationManager authenticationMgr;
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http)throws Exception{
-        http.sessionManagement(session ->
 
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .csrf( csrf ->csrf.disable())
+                .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(new CorsConfigurationSource() {
                     @Override
                     public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
@@ -39,11 +39,8 @@ public class SecurityConfig {
                     }
                 }))
 
-                .authorizeHttpRequests(requests->requests.requestMatchers("/login","/register","/add","/addRole/{username}/{rolename}","stats/users","addAnnonce","/byUser","userWithMostAnnouncements").
-
-                        permitAll()
-                        .requestMatchers("/all").hasAuthority("ADMIN")
-                        .anyRequest().authenticated())
+                .authorizeRequests(requests -> requests
+                        .anyRequest().permitAll())
                 .addFilterBefore(new JWTAuthenticationFilter(authenticationMgr),
                         UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JWTAuthorizationFilter(),
@@ -51,6 +48,6 @@ public class SecurityConfig {
 
         return http.build();
     }
-
-
 }
+
+
