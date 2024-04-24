@@ -26,7 +26,7 @@
 
 
         @Override
-        public AnnonceCollocation addAnnonce(AnnonceCollocationDto annonceCollocationDto) {
+        public AnnonceCollocationDto addAnnonce(AnnonceCollocationDto annonceCollocationDto) {
             AnnonceCollocation annonceCollocation = new AnnonceCollocation();
             annonceCollocation.setDate_dispo(annonceCollocationDto.getDate_dispo());
             annonceCollocation.setNbre_chmbre(annonceCollocationDto.getNbre_chmbre());
@@ -39,11 +39,13 @@
             User user = userRepo.findById(annonceCollocationDto.getUserId()).orElse(null);
             annonceCollocation.setUser(user);
 
-            return annonceCollocationRepo.save(annonceCollocation);
+             annonceCollocationRepo.save(annonceCollocation);
+             return annonceCollocationDto;
         }
 
+
         @Override
-        public AnnonceCollocation updateAnnonce(Long id, AnnonceCollocationDto annonceCollocationDto) {
+        public AnnonceCollocationDto updateAnnonce(Long id, AnnonceCollocationDto annonceCollocationDto) {
             Optional<AnnonceCollocation> optionalAnnonceCollocation = annonceCollocationRepo.findById(id);
             if (optionalAnnonceCollocation.isPresent()) {
                 AnnonceCollocation annonceCollocation = optionalAnnonceCollocation.get();
@@ -58,7 +60,9 @@
                 User user = userRepo.findById(annonceCollocationDto.getUserId()).orElse(null);
                 annonceCollocation.setUser(user);
 
-                return annonceCollocationRepo.save(annonceCollocation);
+                 annonceCollocationRepo.save(annonceCollocation);
+                return annonceCollocationDto;
+
             }
             return null;
         }
@@ -71,5 +75,9 @@
         public void deleteAnnonceById(Long id) {
             annonceCollocationRepo.deleteById(id);
 
+        }
+        @Override
+        public Optional<AnnonceCollocation> getAnnonceById(Long id) {
+            return annonceCollocationRepo.findById(id);
         }
     }

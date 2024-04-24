@@ -46,7 +46,7 @@ public class AnnonceCovoiturageController {
     public List<AnnonceCovoiturage> rechercherAnnoncesParUtilisateur(@RequestParam Long userId){
         return annonceCovoiturageService.rechercherAnnoncesParUtilisateur(userId);
     }
-    @GetMapping("/sortAnnoncebyDate")
+        @GetMapping("/sortAnnoncebyDate")
     public List<AnnonceCovoiturage>trierAnnonceCovoiturageParDate(){
         return  annonceCovoiturageService.trierAnnonceCovoiturageParDate();
 
