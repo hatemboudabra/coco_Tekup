@@ -21,14 +21,14 @@ public class AnnonceCollocationController {
     @Autowired
     private AnnonceCollocationService annonceCollocationService;
     @PostMapping("/add")
-    public ResponseEntity<AnnonceCollocation> addAnnonce(@RequestBody AnnonceCollocationDto annonceCollocationDto) {
-        AnnonceCollocation annonceCollocation = annonceCollocationService.addAnnonce(annonceCollocationDto);
+    public ResponseEntity<AnnonceCollocationDto> addAnnonce(@RequestBody AnnonceCollocationDto annonceCollocationDto) {
+        AnnonceCollocationDto annonceCollocation = annonceCollocationService.addAnnonce(annonceCollocationDto);
         return new ResponseEntity<>(annonceCollocation, HttpStatus.CREATED);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<AnnonceCollocation> updateAnnonce(@PathVariable Long id, @RequestBody AnnonceCollocationDto annonceCollocationDto) {
-        AnnonceCollocation updatedAnnonceCollocation = annonceCollocationService.updateAnnonce(id, annonceCollocationDto);
+    public ResponseEntity<AnnonceCollocationDto> updateAnnonce(@PathVariable Long id, @RequestBody AnnonceCollocationDto annonceCollocationDto) {
+        AnnonceCollocationDto updatedAnnonceCollocation = annonceCollocationService.updateAnnonce(id, annonceCollocationDto);
         if (updatedAnnonceCollocation != null) {
             return new ResponseEntity<>(updatedAnnonceCollocation, HttpStatus.OK);
         } else {
@@ -37,7 +37,7 @@ public class AnnonceCollocationController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<AnnonceCollocation>> getAllAnnonces() {
+    public ResponseEntity<List<AnnonceCollocation>> getAllAnnonces(AnnonceCollocationDto annonceCollocationDto) {
         List<AnnonceCollocation> annonces = annonceCollocationService.getAllAnnonces();
         return new ResponseEntity<>(annonces, HttpStatus.OK);
     }
@@ -47,4 +47,11 @@ public class AnnonceCollocationController {
         annonceCollocationService.deleteAnnonceById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<AnnonceCollocation> getAnnonceById(@PathVariable Long id) {
+        Optional<AnnonceCollocation> annonce = annonceCollocationService.getAnnonceById(id);
+        return annonce.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
 }
