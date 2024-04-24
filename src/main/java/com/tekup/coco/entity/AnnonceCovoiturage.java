@@ -18,8 +18,8 @@ public class AnnonceCovoiturage implements Serializable {
     private Long id;
     private String designation;
     private Date heure_Depart;
-    private Date heure_fin ;
     private String Lieu_depart;
+    private String lieu_fin ;
     private Long nbrePlaceDisponible;
     @Enumerated(EnumType.STRING)
     @Column(length = 20)

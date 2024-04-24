@@ -30,8 +30,8 @@ public class AnnonceCovoiturageServiceImpl implements AnnonceCovoiturageService 
         AnnonceCovoiturage annonceCovoiturage = new AnnonceCovoiturage();
         annonceCovoiturage.setDesignation(annonceCovoiturageDto.getDesignation());
         annonceCovoiturage.setHeure_Depart(annonceCovoiturageDto.getHeure_Depart());
-        annonceCovoiturage.setHeure_fin(annonceCovoiturageDto.getHeure_fin());
         annonceCovoiturage.setLieu_depart(annonceCovoiturageDto.getLieu_depart());
+        annonceCovoiturage.setLieu_fin(annonceCovoiturageDto.getLieu_fin());
         annonceCovoiturage.setNbrePlaceDisponible(annonceCovoiturageDto.getNbrePlaceDisponible());
         annonceCovoiturage.setTypeCovoiturage(annonceCovoiturageDto.getTypeCovoiturage());
         User user = userRepository.findById(annonceCovoiturageDto.getIdUSEr()).get();
@@ -48,8 +48,8 @@ public class AnnonceCovoiturageServiceImpl implements AnnonceCovoiturageService 
             AnnonceCovoiturage annonceCovoiturage= optionalAnnonceCovoiturage.get();
             annonceCovoiturage.setDesignation(annonceCovoiturageDto.getDesignation());
             annonceCovoiturage.setHeure_Depart(annonceCovoiturageDto.getHeure_Depart());
-            annonceCovoiturage.setHeure_fin(annonceCovoiturageDto.getHeure_fin());
             annonceCovoiturage.setLieu_depart(annonceCovoiturageDto.getLieu_depart());
+            annonceCovoiturage.setLieu_fin(annonceCovoiturageDto.getLieu_fin());
             annonceCovoiturage.setNbrePlaceDisponible(annonceCovoiturageDto.getNbrePlaceDisponible());
             annonceCovoiturage.setTypeCovoiturage(annonceCovoiturageDto.getTypeCovoiturage());
 
