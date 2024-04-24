@@ -30,6 +30,7 @@ public class AnnonceCovoiturageServiceImpl implements AnnonceCovoiturageService 
         AnnonceCovoiturage annonceCovoiturage = new AnnonceCovoiturage();
         annonceCovoiturage.setDesignation(annonceCovoiturageDto.getDesignation());
         annonceCovoiturage.setHeure_Depart(annonceCovoiturageDto.getHeure_Depart());
+        annonceCovoiturage.setHeure_fin(annonceCovoiturageDto.getHeure_fin());
         annonceCovoiturage.setLieu_depart(annonceCovoiturageDto.getLieu_depart());
         annonceCovoiturage.setNbrePlaceDisponible(annonceCovoiturageDto.getNbrePlaceDisponible());
         annonceCovoiturage.setTypeCovoiturage(annonceCovoiturageDto.getTypeCovoiturage());
@@ -47,6 +48,7 @@ public class AnnonceCovoiturageServiceImpl implements AnnonceCovoiturageService 
             AnnonceCovoiturage annonceCovoiturage= optionalAnnonceCovoiturage.get();
             annonceCovoiturage.setDesignation(annonceCovoiturageDto.getDesignation());
             annonceCovoiturage.setHeure_Depart(annonceCovoiturageDto.getHeure_Depart());
+            annonceCovoiturage.setHeure_fin(annonceCovoiturageDto.getHeure_fin());
             annonceCovoiturage.setLieu_depart(annonceCovoiturageDto.getLieu_depart());
             annonceCovoiturage.setNbrePlaceDisponible(annonceCovoiturageDto.getNbrePlaceDisponible());
             annonceCovoiturage.setTypeCovoiturage(annonceCovoiturageDto.getTypeCovoiturage());
@@ -126,7 +128,13 @@ public class AnnonceCovoiturageServiceImpl implements AnnonceCovoiturageService 
         }
 
         if (userAvecLePlusDAnnonces != null) {
+            String username = userAvecLePlusDAnnonces.getUsername();
             userAvecLePlusDAnnonces.setAnnouncementCount(maxAnnonces);
+            int nombreAnnonces = userAvecLePlusDAnnonces.getAnnouncementCount();
+
+            // Return the username and number of announcements
+            System.out.println("Username: " + username);
+            System.out.println("Number of Announcements: " + nombreAnnonces);
         }
 
         return userAvecLePlusDAnnonces;

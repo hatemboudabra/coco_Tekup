@@ -12,12 +12,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/annoncecovoiturage")
 public class AnnonceCovoiturageController {
     private final AnnonceCovoiturageServiceImpl annonceCovoiturageService;
     @Autowired
@@ -28,7 +30,16 @@ public class AnnonceCovoiturageController {
      public AnnonceCovoiturage addAnnonce(@RequestBody AnnonceCovoiturageDto annonceCovoiturageDto){
         return annonceCovoiturageService.addAnnonce(annonceCovoiturageDto);
     }
-    @GetMapping
+    @PutMapping("/update/{id}")
+    public ResponseEntity<AnnonceCovoiturage> updateAnnonce(@PathVariable Long id, @RequestBody AnnonceCovoiturageDto annonceCovoiturageDto) {
+        AnnonceCovoiturage updatedAnnonce = annonceCovoiturageService.updateAnnonce(id, annonceCovoiturageDto);
+        if (updatedAnnonce != null) {
+            return ResponseEntity.ok(updatedAnnonce);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("/all")
     public List<AnnonceCovoiturage> findallAnnonce (AnnonceCovoiturageDto annonceCovoiturageDto){
         return  annonceCovoiturageService.findAll();
     }
@@ -56,10 +67,13 @@ public class AnnonceCovoiturageController {
         return annonceCovoiturageService.annoncesParUserService();
     }
     @GetMapping("/userWithMostAnnouncements")
-    public ResponseEntity<UserDto> getUserWithMostAnnouncements() {
+    public ResponseEntity<Map<String, Object>> getUserWithMostAnnouncements() {
         UserDto userWithMostAnnouncements = annonceCovoiturageService.getUserAvecLePlusDAnnonces();
         if (userWithMostAnnouncements != null) {
-            return ResponseEntity.ok(userWithMostAnnouncements);
+            Map<String, Object> response = new LinkedHashMap<>();
+            response.put("username", userWithMostAnnouncements.getUsername());
+            response.put("nombreAnnonces", userWithMostAnnouncements.getAnnouncementCount());
+            return ResponseEntity.ok(response);
         } else {
             return ResponseEntity.notFound().build();
         }
