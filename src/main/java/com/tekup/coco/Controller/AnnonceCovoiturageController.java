@@ -22,7 +22,7 @@ public class AnnonceCovoiturageController {
         this.annonceCovoiturageService = annonceCovoiturageService;
     }
     @PostMapping(path = "/addAnnonce")
-     public AnnonceCovoiturage addAnnonce(@RequestBody AnnonceCovoiturageDto annonceCovoiturageDto){
+     public AnnonceCovoiturageDto addAnnonce(@RequestBody AnnonceCovoiturageDto annonceCovoiturageDto){
         return annonceCovoiturageService.addAnnonce(annonceCovoiturageDto);
     }
     @PutMapping("/update/{id}")

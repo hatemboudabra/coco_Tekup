@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public interface AnnonceCovoiturageService {
-    public AnnonceCovoiturage addAnnonce (AnnonceCovoiturageDto annonceCovoiturageDto);
+    public AnnonceCovoiturageDto addAnnonce (AnnonceCovoiturageDto annonceCovoiturageDto);
     AnnonceCovoiturage updateAnnonce (Long id , AnnonceCovoiturageDto annonceCovoiturageDto);
     public Optional<AnnonceCovoiturage> findById(Long id);
     List<AnnonceCovoiturage> findAll();
