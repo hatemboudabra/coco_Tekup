@@ -26,7 +26,7 @@ public class AnnonceCovoiturageServiceImpl implements AnnonceCovoiturageService 
         this.userRepository = userRepository;
     }
     @Override
-    public AnnonceCovoiturage addAnnonce(AnnonceCovoiturageDto annonceCovoiturageDto) {
+    public AnnonceCovoiturageDto addAnnonce(AnnonceCovoiturageDto annonceCovoiturageDto) {
         AnnonceCovoiturage annonceCovoiturage = new AnnonceCovoiturage();
         annonceCovoiturage.setDesignation(annonceCovoiturageDto.getDesignation());
         annonceCovoiturage.setHeure_Depart(annonceCovoiturageDto.getHeure_Depart());
@@ -39,7 +39,7 @@ public class AnnonceCovoiturageServiceImpl implements AnnonceCovoiturageService 
         annonceCovoiturage = annonceCovoiturageRepo.save(annonceCovoiturage);
         user.getAnnonceCovoiturageList().add(annonceCovoiturage);
         userRepository.save(user);
-        return annonceCovoiturage;
+        return annonceCovoiturageDto;
     }
     @Override
     public AnnonceCovoiturage updateAnnonce(Long id, AnnonceCovoiturageDto annonceCovoiturageDto) {
@@ -74,10 +74,13 @@ public class AnnonceCovoiturageServiceImpl implements AnnonceCovoiturageService 
     public Optional<AnnonceCovoiturage> findById(Long id) {
         return annonceCovoiturageRepo.findById(id);
     }
+
     @Override
     public List<AnnonceCovoiturage> findAll() {
         return annonceCovoiturageRepo.findAll();
     }
+
+
     @Override
     public void delete(Long id) {
         annonceCovoiturageRepo.deleteById(id);

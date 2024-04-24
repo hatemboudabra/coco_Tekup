@@ -16,7 +16,6 @@ import java.util.Map;
 @RestController
 @CrossOrigin(origins = "*")
 @Tag(name = "Test")
-
 public class UserRestController {
     @Autowired
     UserService userService;
