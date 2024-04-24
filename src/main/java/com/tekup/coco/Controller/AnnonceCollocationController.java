@@ -1,5 +1,6 @@
 package com.tekup.coco.Controller;
 
+import com.tekup.coco.Dto.AnnonceCollocationDto;
 import com.tekup.coco.entity.AnnonceCollocation;
 import com.tekup.coco.services.AnnonceCollocationService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -19,26 +20,31 @@ import java.util.Optional;
 public class AnnonceCollocationController {
     @Autowired
     private AnnonceCollocationService annonceCollocationService;
-    @Operation(description = "annonce")
-    @GetMapping("/")
-    public List<AnnonceCollocation> getAllAnnonces() {
-        return annonceCollocationService.getAllAnnonces();
-    }
-    @Operation(description = "annonce")
-
-    @GetMapping("/{id}")
-    public Optional<AnnonceCollocation> getAnnonceById(@PathVariable Long id) {
-        return annonceCollocationService.getAnnonceById(id);
+    @PostMapping("/add")
+    public ResponseEntity<AnnonceCollocation> addAnnonce(@RequestBody AnnonceCollocationDto annonceCollocationDto) {
+        AnnonceCollocation annonceCollocation = annonceCollocationService.addAnnonce(annonceCollocationDto);
+        return new ResponseEntity<>(annonceCollocation, HttpStatus.CREATED);
     }
 
-    @PostMapping("/ajouter")
-    public AnnonceCollocation createOrUpdateAnnonce(@RequestBody AnnonceCollocation annonce) {
-        return annonceCollocationService.saveOrUpdateAnnonce(annonce);
+    @PutMapping("/update/{id}")
+    public ResponseEntity<AnnonceCollocation> updateAnnonce(@PathVariable Long id, @RequestBody AnnonceCollocationDto annonceCollocationDto) {
+        AnnonceCollocation updatedAnnonceCollocation = annonceCollocationService.updateAnnonce(id, annonceCollocationDto);
+        if (updatedAnnonceCollocation != null) {
+            return new ResponseEntity<>(updatedAnnonceCollocation, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteAnnonce(@PathVariable Long id) {
+    @GetMapping("/all")
+    public ResponseEntity<List<AnnonceCollocation>> getAllAnnonces() {
+        List<AnnonceCollocation> annonces = annonceCollocationService.getAllAnnonces();
+        return new ResponseEntity<>(annonces, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteAnnonce(@PathVariable Long id) {
         annonceCollocationService.deleteAnnonceById(id);
-        return new ResponseEntity<String>("Annonce deleted successfully!.", HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
