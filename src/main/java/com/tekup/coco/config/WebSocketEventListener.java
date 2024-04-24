@@ -29,6 +29,6 @@ public class WebSocketEventListener {
                     .build();
             messagingTemplate.convertAndSend("/topic/public", chatMessage);
         }
-
     }
+
 }
