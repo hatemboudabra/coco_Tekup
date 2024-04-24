@@ -3,8 +3,6 @@ package com.tekup.coco.services;
 import com.tekup.coco.Dto.AnnonceCovoiturageDto;
 import com.tekup.coco.Dto.UserDto;
 import com.tekup.coco.entity.AnnonceCovoiturage;
-import com.tekup.coco.entity.Notification;
-import com.tekup.coco.entity.User;
 
 import java.util.List;
 import java.util.Map;

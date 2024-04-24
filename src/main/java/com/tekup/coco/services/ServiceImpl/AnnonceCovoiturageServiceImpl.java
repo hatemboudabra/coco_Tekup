@@ -74,10 +74,13 @@ public class AnnonceCovoiturageServiceImpl implements AnnonceCovoiturageService 
     public Optional<AnnonceCovoiturage> findById(Long id) {
         return annonceCovoiturageRepo.findById(id);
     }
+
     @Override
     public List<AnnonceCovoiturage> findAll() {
         return annonceCovoiturageRepo.findAll();
     }
+
+
     @Override
     public void delete(Long id) {
         annonceCovoiturageRepo.deleteById(id);
