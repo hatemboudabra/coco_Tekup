@@ -13,6 +13,7 @@ import java.util.Date;
 public class AnnonceCovoiturageDto {
     private String designation;
     private Date heure_Depart;
+    private String lieu_fin ;
     private String lieu_depart;
     private Long nbrePlaceDisponible;
     private Type_Covoiturage typeCovoiturage;

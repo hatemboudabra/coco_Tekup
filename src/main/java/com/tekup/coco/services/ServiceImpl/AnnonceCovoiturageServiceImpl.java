@@ -31,6 +31,7 @@ public class AnnonceCovoiturageServiceImpl implements AnnonceCovoiturageService 
         annonceCovoiturage.setDesignation(annonceCovoiturageDto.getDesignation());
         annonceCovoiturage.setHeure_Depart(annonceCovoiturageDto.getHeure_Depart());
         annonceCovoiturage.setLieu_depart(annonceCovoiturageDto.getLieu_depart());
+        annonceCovoiturage.setLieu_fin(annonceCovoiturageDto.getLieu_fin());
         annonceCovoiturage.setNbrePlaceDisponible(annonceCovoiturageDto.getNbrePlaceDisponible());
         annonceCovoiturage.setTypeCovoiturage(annonceCovoiturageDto.getTypeCovoiturage());
         User user = userRepository.findById(annonceCovoiturageDto.getIdUSEr()).get();
@@ -48,6 +49,7 @@ public class AnnonceCovoiturageServiceImpl implements AnnonceCovoiturageService 
             annonceCovoiturage.setDesignation(annonceCovoiturageDto.getDesignation());
             annonceCovoiturage.setHeure_Depart(annonceCovoiturageDto.getHeure_Depart());
             annonceCovoiturage.setLieu_depart(annonceCovoiturageDto.getLieu_depart());
+            annonceCovoiturage.setLieu_fin(annonceCovoiturageDto.getLieu_fin());
             annonceCovoiturage.setNbrePlaceDisponible(annonceCovoiturageDto.getNbrePlaceDisponible());
             annonceCovoiturage.setTypeCovoiturage(annonceCovoiturageDto.getTypeCovoiturage());
 
@@ -126,7 +128,13 @@ public class AnnonceCovoiturageServiceImpl implements AnnonceCovoiturageService 
         }
 
         if (userAvecLePlusDAnnonces != null) {
+            String username = userAvecLePlusDAnnonces.getUsername();
             userAvecLePlusDAnnonces.setAnnouncementCount(maxAnnonces);
+            int nombreAnnonces = userAvecLePlusDAnnonces.getAnnouncementCount();
+
+            // Return the username and number of announcements
+            System.out.println("Username: " + username);
+            System.out.println("Number of Announcements: " + nombreAnnonces);
         }
 
         return userAvecLePlusDAnnonces;
