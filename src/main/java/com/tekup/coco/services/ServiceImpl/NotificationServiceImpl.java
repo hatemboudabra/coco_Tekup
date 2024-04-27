@@ -12,6 +12,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -39,14 +40,15 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public Optional<Notification> getNotificationById(Long id) {
-        return notificationReppository.findById(id);    }
+        return notificationReppository.findById(id);
+    }
 
     @Override
     public Notification addNotification(NotificationDto notificationDto) {
         Notification notification = new Notification();
         notification.setMessage(notificationDto.getMessage());
         User user = userRepository.findById(notificationDto.getIdUser()).get();
-        Reservation reservation= reservationRepository.findById(notificationDto.getIdReservation()).get();
+        Reservation reservation = reservationRepository.findById(notificationDto.getIdReservation()).get();
         notification.setReservation(reservation);
         notification.setUser(user);
         notification = notificationReppository.save(notification);
@@ -54,7 +56,7 @@ public class NotificationServiceImpl implements NotificationService {
         reservation.getNotificationList().add(notification);
         reservationRepository.save(reservation);
         userRepository.save(user);
-        return  notification ;
+        return notification;
     }
 
     @Override
@@ -81,7 +83,7 @@ public class NotificationServiceImpl implements NotificationService {
 
             return null;
         }
-        }
+    }
 
     @Override
     public void deleteNotification(Long id) {
@@ -90,15 +92,11 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public List<Notification> trierNotificationParDate() {
-        List<Notification> notificationss =notificationReppository.findAll();
+        List<Notification> notificationss = notificationReppository.findAll();
         return notificationss.stream().sorted(Comparator.comparing(Notification::getSendDate).reversed())
                 .collect(Collectors.toList());
     }
 
-
-    public List<Notification> findNotificationsByUserId(Long userId) {
-        return notificationReppository.findNotificationsByUserId(userId);
-    }
 
 
 }

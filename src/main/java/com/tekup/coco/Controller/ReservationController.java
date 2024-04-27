@@ -2,6 +2,7 @@ package com.tekup.coco.Controller;
 
 import com.tekup.coco.entity.Reservation;
 import com.tekup.coco.services.ReservationService;
+import com.tekup.coco.services.ServiceImpl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,17 +14,13 @@ import java.util.List;
 @RequestMapping("/reservations")
 public class ReservationController {
     private final ReservationService reservationService;
-
+    private final UserServiceImpl userService;
     @Autowired
-    public ReservationController(ReservationService reservationService) {
+    public ReservationController(ReservationService reservationService, UserServiceImpl userService) {
         this.reservationService = reservationService;
+        this.userService = userService;
     }
 
-    @PostMapping
-    public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation) {
-        Reservation savedReservation = reservationService.saveReservation(reservation);
-        return new ResponseEntity<>(savedReservation, HttpStatus.CREATED);
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Reservation> getReservationById(@PathVariable Long id) {

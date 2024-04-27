@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface ReservationService {
     Reservation saveReservation(Reservation reservation);
+
     Reservation getReservationById(Long id);
     List<Reservation> getAllReservations();
     void deleteReservationById(Long id);

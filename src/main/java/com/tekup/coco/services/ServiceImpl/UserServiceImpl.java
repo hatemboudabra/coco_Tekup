@@ -74,6 +74,9 @@ public class UserServiceImpl implements UserService {
 
 
 
+    public User getUserById(Long userId) {
+        return userRep.findById(userId).orElse(null);
+    }
 
 
     }
