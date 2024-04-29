@@ -1,4 +1,4 @@
-package com.tekup.coco.config;
+package com.tekup.coco.Config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

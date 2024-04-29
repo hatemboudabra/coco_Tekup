@@ -1,4 +1,4 @@
-package com.tekup.coco.config;
+package com.tekup.coco.Config;
 
 import com.tekup.coco.Dto.MessageDto;
 import com.tekup.coco.entity.enummeration.MessageType;
