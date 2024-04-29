@@ -99,48 +99,43 @@ public class AnnonceCovoiturageServiceImpl implements AnnonceCovoiturageService 
      public List<AnnonceCovoiturage> rechercherAnnoncesParUtilisateur(Long userId){
         return annonceCovoiturageRepo.findAnnonceCovoiturageByUserId(userId);
     }
-    @Override
-    public Map<UserDto, Integer> annoncesParUserService() {
-        List<AnnonceCovoiturage> annonces = annonceCovoiturageRepo.findAll();
-        Map<UserDto, Integer> annoncesParUser = new HashMap<>();
 
-        for (AnnonceCovoiturage annonce : annonces) {
-            User user = annonce.getUser();
-            UserDto userDto = new UserDto();
-            userDto.setUsername(user.getUsername());
-            userDto.setEmail(user.getEmail());
+@Override
+public Map<Long, Map<String, Object>> annoncesParUserService() {
+    List<AnnonceCovoiturage> annonces = annonceCovoiturageRepo.findAll();
+    Map<Long, Map<String, Object>> annoncesParUser = new HashMap<>();
 
-            annoncesParUser.put(userDto, annoncesParUser.getOrDefault(userDto, 0) + 1);
-        }
+    for (AnnonceCovoiturage annonce : annonces) {
+        User user = annonce.getUser();
+        Long userId = user.getId();
+        String username = user.getUsername();
 
-        return annoncesParUser;
-    }@Override
-    public UserDto getUserAvecLePlusDAnnonces() {
-        Map<UserDto, Integer> annoncesParUser = annoncesParUserService();
-        UserDto userAvecLePlusDAnnonces = null;
-        int maxAnnonces = 0;
-
-        for (Map.Entry<UserDto, Integer> entry : annoncesParUser.entrySet()) {
-            UserDto userDto = entry.getKey();
-            Integer nombreAnnonces = entry.getValue();
-
-            if (nombreAnnonces > maxAnnonces) {
-                maxAnnonces = nombreAnnonces;
-                userAvecLePlusDAnnonces = userDto;
-            }
-        }
-
-        if (userAvecLePlusDAnnonces != null) {
-            String username = userAvecLePlusDAnnonces.getUsername();
-            userAvecLePlusDAnnonces.setAnnouncementCount(maxAnnonces);
-            int nombreAnnonces = userAvecLePlusDAnnonces.getAnnouncementCount();
-
-            // Return the username and number of announcements
-            System.out.println("Username: " + username);
-            System.out.println("Number of Announcements: " + nombreAnnonces);
-        }
-
-        return userAvecLePlusDAnnonces;
+        Map<String, Object> userStats = annoncesParUser.getOrDefault(userId, new HashMap<>());
+        int announcementCount = (int) userStats.getOrDefault("announcementCount", 0);
+        userStats.put("announcementCount", announcementCount + 1);
+        userStats.put("username", username);
+        annoncesParUser.put(userId, userStats);
     }
 
+    // Sort the map entries by announcement count in descending order
+    List<Map.Entry<Long, Map<String, Object>>> sortedEntries = new ArrayList<>(annoncesParUser.entrySet());
+    sortedEntries.sort((entry1, entry2) -> {
+        int count1 = (int) entry1.getValue().getOrDefault("announcementCount", 0);
+        int count2 = (int) entry2.getValue().getOrDefault("announcementCount", 0);
+        return Integer.compare(count2, count1);
+    });
+
+    // Create a new map to store the top 5 user IDs, usernames, and their announcement counts
+    Map<Long, Map<String, Object>> topUsers = new LinkedHashMap<>();
+    int count = 0;
+    for (Map.Entry<Long, Map<String, Object>> entry : sortedEntries) {
+        if (count >= 5) {
+            break;
+        }
+        topUsers.put(entry.getKey(), entry.getValue());
+        count++;
+    }
+
+    return topUsers;
+}
 }

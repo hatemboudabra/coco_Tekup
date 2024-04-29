@@ -17,14 +17,17 @@ import java.util.Map;
 @RestController
 public class AnnonceCovoiturageController {
     private final AnnonceCovoiturageServiceImpl annonceCovoiturageService;
+
     @Autowired
     public AnnonceCovoiturageController(AnnonceCovoiturageServiceImpl annonceCovoiturageService) {
         this.annonceCovoiturageService = annonceCovoiturageService;
     }
+
     @PostMapping(path = "/addAnnonce")
-     public AnnonceCovoiturageDto addAnnonce(@RequestBody AnnonceCovoiturageDto annonceCovoiturageDto){
+    public AnnonceCovoiturageDto addAnnonce(@RequestBody AnnonceCovoiturageDto annonceCovoiturageDto) {
         return annonceCovoiturageService.addAnnonce(annonceCovoiturageDto);
     }
+
     @PutMapping("/update/{id}")
     public ResponseEntity<AnnonceCovoiturage> updateAnnonce(@PathVariable Long id, @RequestBody AnnonceCovoiturageDto annonceCovoiturageDto) {
         AnnonceCovoiturage updatedAnnonce = annonceCovoiturageService.updateAnnonce(id, annonceCovoiturageDto);
@@ -34,12 +37,14 @@ public class AnnonceCovoiturageController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @GetMapping("/all")
-    public List<AnnonceCovoiturage> findallAnnonce (AnnonceCovoiturageDto annonceCovoiturageDto){
-        return  annonceCovoiturageService.findAll();
+    public List<AnnonceCovoiturage> findallAnnonce(AnnonceCovoiturageDto annonceCovoiturageDto) {
+        return annonceCovoiturageService.findAll();
     }
-    @DeleteMapping("{id}")
-    public ResponseEntity<String> deleteAnnonce(@PathVariable("id") long id){
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteAnnonce(@PathVariable("id") long id) {
         annonceCovoiturageService.delete(id);
         return new ResponseEntity<String>("Annonce deleted successfully!.", HttpStatus.OK);
     }
@@ -48,29 +53,20 @@ public class AnnonceCovoiturageController {
     public List<AnnonceCovoiturage> findByLieuDepart(@RequestParam String lieuDepart) {
         return annonceCovoiturageService.findByLieuDepart(lieuDepart);
     }
+
     @GetMapping("/byUser")
-    public List<AnnonceCovoiturage> rechercherAnnoncesParUtilisateur(@RequestParam Long userId){
+    public List<AnnonceCovoiturage> rechercherAnnoncesParUtilisateur(@RequestParam Long userId) {
         return annonceCovoiturageService.rechercherAnnoncesParUtilisateur(userId);
     }
-        @GetMapping("/sortAnnoncebyDate")
-    public List<AnnonceCovoiturage>trierAnnonceCovoiturageParDate(){
-        return  annonceCovoiturageService.trierAnnonceCovoiturageParDate();
+
+    @GetMapping("/sortAnnoncebyDate")
+    public List<AnnonceCovoiturage> trierAnnonceCovoiturageParDate() {
+        return annonceCovoiturageService.trierAnnonceCovoiturageParDate();
 
     }
+
     @GetMapping("/stats/users")
-    public Map<UserDto, Integer> annoncesParUser() {
+    public Map<Long, Map<String, Object>> annoncesParUserService()   {
         return annonceCovoiturageService.annoncesParUserService();
-    }
-    @GetMapping("/userWithMostAnnouncements")
-    public ResponseEntity<Map<String, Object>> getUserWithMostAnnouncements() {
-        UserDto userWithMostAnnouncements = annonceCovoiturageService.getUserAvecLePlusDAnnonces();
-        if (userWithMostAnnouncements != null) {
-            Map<String, Object> response = new LinkedHashMap<>();
-            response.put("username", userWithMostAnnouncements.getUsername());
-            response.put("nombreAnnonces", userWithMostAnnouncements.getAnnouncementCount());
-            return ResponseEntity.ok(response);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
     }
 }

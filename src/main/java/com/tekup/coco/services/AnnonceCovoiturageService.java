@@ -15,7 +15,7 @@ public interface AnnonceCovoiturageService {
     List<AnnonceCovoiturage> findAll();
     void delete(Long id);
     List <AnnonceCovoiturage> trierAnnonceCovoiturageParDate();
-    Map<UserDto, Integer> annoncesParUserService();
-    UserDto getUserAvecLePlusDAnnonces();
+    public Map<Long, Map<String, Object>> annoncesParUserService();
+    //   UserDto getUserAvecLePlusDAnnonces();
 
 }
