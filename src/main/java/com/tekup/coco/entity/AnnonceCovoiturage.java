@@ -25,7 +25,7 @@ public class AnnonceCovoiturage implements Serializable {
     @Column(length = 20)
     private Type_Covoiturage typeCovoiturage;
     @ManyToOne()
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     User user;
     @ManyToOne()
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
