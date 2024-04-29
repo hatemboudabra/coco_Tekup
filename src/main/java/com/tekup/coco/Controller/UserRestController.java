@@ -1,6 +1,7 @@
 package com.tekup.coco.Controller;
 
 import com.tekup.coco.entity.User;
+import com.tekup.coco.repository.UserRepo;
 import com.tekup.coco.services.ServiceImpl.AnnonceCovoiturageServiceImpl;
 import com.tekup.coco.services.UserService;
 import com.tekup.coco.services.register.RegistationRequest;
@@ -19,15 +20,20 @@ import java.util.Map;
 public class UserRestController {
     @Autowired
     UserService userService;
+    @Autowired
+    UserRepo userRepo;
     @GetMapping("all")
     public List<User> getAllUsers() {
         return userService.findAllUsers();
     }
     @Operation(description = "user")
-
     @PostMapping("register")
    public User register(@RequestBody RegistationRequest request){
         return userService.registerUser(request);
 
    }
+    @GetMapping("/{username}")
+    public User getUserByUsername(@PathVariable String username) {
+        return userRepo.findByUsername(username);
+    }
 }
