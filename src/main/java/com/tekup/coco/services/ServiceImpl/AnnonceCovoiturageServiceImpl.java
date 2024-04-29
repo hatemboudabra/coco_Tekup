@@ -1,7 +1,6 @@
 package com.tekup.coco.services.ServiceImpl;
 
 import com.tekup.coco.Dto.AnnonceCovoiturageDto;
-import com.tekup.coco.Dto.UserDto;
 import com.tekup.coco.entity.AnnonceCovoiturage;
 import com.tekup.coco.entity.User;
 import com.tekup.coco.repository.AnnonceCovoiturageRepo;
@@ -10,6 +9,7 @@ import com.tekup.coco.services.AnnonceCovoiturageService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -27,20 +27,32 @@ public class AnnonceCovoiturageServiceImpl implements AnnonceCovoiturageService 
     }
     @Override
     public AnnonceCovoiturageDto addAnnonce(AnnonceCovoiturageDto annonceCovoiturageDto) {
-        AnnonceCovoiturage annonceCovoiturage = new AnnonceCovoiturage();
-        annonceCovoiturage.setDesignation(annonceCovoiturageDto.getDesignation());
-        annonceCovoiturage.setHeure_Depart(annonceCovoiturageDto.getHeure_Depart());
-        annonceCovoiturage.setLieu_depart(annonceCovoiturageDto.getLieu_depart());
-        annonceCovoiturage.setLieu_fin(annonceCovoiturageDto.getLieu_fin());
-        annonceCovoiturage.setNbrePlaceDisponible(annonceCovoiturageDto.getNbrePlaceDisponible());
-        annonceCovoiturage.setTypeCovoiturage(annonceCovoiturageDto.getTypeCovoiturage());
-        User user = userRepository.findById(annonceCovoiturageDto.getIdUSEr()).get();
-        annonceCovoiturage.setUser(user);
-        annonceCovoiturage = annonceCovoiturageRepo.save(annonceCovoiturage);
-        user.getAnnonceCovoiturageList().add(annonceCovoiturage);
-        userRepository.save(user);
+        User user = userRepository.findById(annonceCovoiturageDto.getIdUSEr()).orElse(null);
+
+        if (user != null) {
+            if (user.getAnnonceCovoiturageList() != null && !user.getAnnonceCovoiturageList().isEmpty()) {
+                AnnonceCovoiturage existingAnnonce = user.getAnnonceCovoiturageList().get(0); // Supposons que l'utilisateur ait une seule annonce, sinon ajustez cette logique
+                user.getAnnonceCovoiturageList().remove(existingAnnonce);
+                annonceCovoiturageRepo.delete(existingAnnonce);
+            }
+
+            AnnonceCovoiturage nouvelleAnnonce = new AnnonceCovoiturage();
+            nouvelleAnnonce.setDesignation(annonceCovoiturageDto.getDesignation());
+            nouvelleAnnonce.setHeure_Depart(annonceCovoiturageDto.getHeure_Depart());
+            nouvelleAnnonce.setLieu_depart(annonceCovoiturageDto.getLieu_depart());
+            nouvelleAnnonce.setLieu_fin(annonceCovoiturageDto.getLieu_fin());
+            nouvelleAnnonce.setNbrePlaceDisponible(annonceCovoiturageDto.getNbrePlaceDisponible());
+            nouvelleAnnonce.setTypeCovoiturage(annonceCovoiturageDto.getTypeCovoiturage());
+            nouvelleAnnonce.setUser(user);
+
+            nouvelleAnnonce = annonceCovoiturageRepo.save(nouvelleAnnonce);
+            user.getAnnonceCovoiturageList().add(nouvelleAnnonce);
+            userRepository.save(user);
+        }
+
         return annonceCovoiturageDto;
     }
+
     @Override
     public AnnonceCovoiturage updateAnnonce(Long id, AnnonceCovoiturageDto annonceCovoiturageDto) {
         Optional<AnnonceCovoiturage> optionalAnnonceCovoiturage = annonceCovoiturageRepo.findById(id);
@@ -80,13 +92,11 @@ public class AnnonceCovoiturageServiceImpl implements AnnonceCovoiturageService 
         return annonceCovoiturageRepo.findAll();
     }
 
-
-    @Override
-    public void delete(Long id) {
-        annonceCovoiturageRepo.deleteById(id);
+    public void deleteAnnonceById(Long annonceId) {
+        annonceCovoiturageRepo.deleteById(annonceId);
     }
 
-    @Override
+        @Override
     public List<AnnonceCovoiturage> trierAnnonceCovoiturageParDate() {
         List<AnnonceCovoiturage>annonceCovoiturages = annonceCovoiturageRepo.findAll();
         return  annonceCovoiturages.stream().sorted(Comparator.comparing(AnnonceCovoiturage::getHeure_Depart).reversed())

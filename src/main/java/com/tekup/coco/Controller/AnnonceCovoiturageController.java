@@ -43,10 +43,10 @@ public class AnnonceCovoiturageController {
         return annonceCovoiturageService.findAll();
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteAnnonce(@PathVariable("id") long id) {
-        annonceCovoiturageService.delete(id);
-        return new ResponseEntity<String>("Annonce deleted successfully!.", HttpStatus.OK);
+    @DeleteMapping("/delete/{annonceId}")
+    public ResponseEntity<String> deleteAnnonceById(@PathVariable Long annonceId) {
+        annonceCovoiturageService.deleteAnnonceById(annonceId);
+        return new ResponseEntity<>("Annonce supprimée avec succès", HttpStatus.OK);
     }
 
     @GetMapping("/bylieu")

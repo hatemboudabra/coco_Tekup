@@ -13,7 +13,7 @@ public interface AnnonceCovoiturageService {
     AnnonceCovoiturage updateAnnonce (Long id , AnnonceCovoiturageDto annonceCovoiturageDto);
     public Optional<AnnonceCovoiturage> findById(Long id);
     List<AnnonceCovoiturage> findAll();
-    void delete(Long id);
+    //void delete(Long id);
     List <AnnonceCovoiturage> trierAnnonceCovoiturageParDate();
     public Map<Long, Map<String, Object>> annoncesParUserService();
     //   UserDto getUserAvecLePlusDAnnonces();
