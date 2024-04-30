@@ -1,6 +1,7 @@
 package com.tekup.coco.services.ServiceImpl;
 
 import com.tekup.coco.Dto.AnnonceCovoiturageDto;
+import com.tekup.coco.entity.AnnonceCollocation;
 import com.tekup.coco.entity.AnnonceCovoiturage;
 import com.tekup.coco.entity.User;
 import com.tekup.coco.repository.AnnonceCovoiturageRepo;
@@ -8,9 +9,11 @@ import com.tekup.coco.repository.UserRepo;
 import com.tekup.coco.services.AnnonceCovoiturageService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,15 +30,6 @@ public class AnnonceCovoiturageServiceImpl implements AnnonceCovoiturageService 
     }
     @Override
     public AnnonceCovoiturageDto addAnnonce(AnnonceCovoiturageDto annonceCovoiturageDto) {
-        User user = userRepository.findById(annonceCovoiturageDto.getIdUSEr()).orElse(null);
-
-        if (user != null) {
-            if (user.getAnnonceCovoiturageList() != null && !user.getAnnonceCovoiturageList().isEmpty()) {
-                AnnonceCovoiturage existingAnnonce = user.getAnnonceCovoiturageList().get(0); // Supposons que l'utilisateur ait une seule annonce, sinon ajustez cette logique
-                user.getAnnonceCovoiturageList().remove(existingAnnonce);
-                annonceCovoiturageRepo.delete(existingAnnonce);
-            }
-
             AnnonceCovoiturage nouvelleAnnonce = new AnnonceCovoiturage();
             nouvelleAnnonce.setDesignation(annonceCovoiturageDto.getDesignation());
             nouvelleAnnonce.setHeure_Depart(annonceCovoiturageDto.getHeure_Depart());
@@ -43,12 +37,12 @@ public class AnnonceCovoiturageServiceImpl implements AnnonceCovoiturageService 
             nouvelleAnnonce.setLieu_fin(annonceCovoiturageDto.getLieu_fin());
             nouvelleAnnonce.setNbrePlaceDisponible(annonceCovoiturageDto.getNbrePlaceDisponible());
             nouvelleAnnonce.setTypeCovoiturage(annonceCovoiturageDto.getTypeCovoiturage());
+            User user = userRepository.findById(annonceCovoiturageDto.getIdUSEr()).get();
             nouvelleAnnonce.setUser(user);
+            annonceCovoiturageRepo.save(nouvelleAnnonce);
 
-            nouvelleAnnonce = annonceCovoiturageRepo.save(nouvelleAnnonce);
-            user.getAnnonceCovoiturageList().add(nouvelleAnnonce);
-            userRepository.save(user);
-        }
+
+
 
         return annonceCovoiturageDto;
     }

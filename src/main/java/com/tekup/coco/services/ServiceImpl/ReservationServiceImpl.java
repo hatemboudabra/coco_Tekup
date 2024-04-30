@@ -6,7 +6,9 @@ import com.tekup.coco.entity.Reservation;
 import com.tekup.coco.repository.AnnonceCovoiturageRepo;
 import com.tekup.coco.repository.ReservationRepo;
 import com.tekup.coco.services.ReservationService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,18 +23,10 @@ public class ReservationServiceImpl implements ReservationService {
         this.reservationRepo = reservationRepo;
         this.annonceCovoiturageRepo = annonceCovoiturageRepo;
     }
-
-    @Override
-    public Reservation saveReservation(Reservation reservation) {
-        AnnonceCovoiturage annonceCovoiturage = (AnnonceCovoiturage) reservation.getAnnonceCovoiturageList();
-        if (annonceCovoiturage.getNbrePlaceDisponible() > 0) {
-            annonceCovoiturage.setNbrePlaceDisponible(annonceCovoiturage.getNbrePlaceDisponible() - 1);
-            return reservationRepo.save(reservation);
-        } else {
-            throw new IllegalArgumentException("Aucune place disponible pour cette annonce de covoiturage.");
-        }
+    @Transactional
+    public void reserverAnnonce(Long annonceId, Long placesReservees) {
+        reservationRepo.reserverPlace(annonceId, placesReservees);
     }
-
 
     @Override
     public Reservation getReservationById(Long id) {
