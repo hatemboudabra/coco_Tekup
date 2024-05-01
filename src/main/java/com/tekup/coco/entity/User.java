@@ -28,7 +28,7 @@ public class User implements Serializable {
     private Message message;
     @OneToMany
      List<Reclamation> reclamationList ;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany
     private List<AnnonceCovoiturage> annonceCovoiturageList = new ArrayList<>();
 
     @OneToMany
