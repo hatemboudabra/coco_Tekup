@@ -26,6 +26,6 @@ public class User  {
     private  List<AnnonceCollocation> annonceCollocationList;
     @OneToOne
     private  Reservation reservation;
-
+//just for commit test
 
 }
