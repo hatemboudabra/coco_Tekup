@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "Etudiant")
-public class Etudiant extends User {
+public class Etudiant  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

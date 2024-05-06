@@ -45,15 +45,15 @@ public class NotificationServiceImpl implements NotificationService {
     public Notification addNotification(NotificationDto notificationDto) {
         Notification notification = new Notification();
         notification.setMessage(notificationDto.getMessage());
-        User user = userRepository.findById(notificationDto.getIdUser()).get();
+       // User user = userRepository.findById(notificationDto.getIdUser()).get();
         Reservation reservation= reservationRepository.findById(notificationDto.getIdReservation()).get();
         notification.setReservation(reservation);
-        notification.setUser(user);
+       // notification.setUser(user);
         notification = notificationReppository.save(notification);
-        user.getNotificationList().add(notification);
+       // user.getNotificationList().add(notification);
         reservation.getNotificationList().add(notification);
         reservationRepository.save(reservation);
-        userRepository.save(user);
+        //userRepository.save(user);
         return  notification ;
     }
 
@@ -63,18 +63,18 @@ public class NotificationServiceImpl implements NotificationService {
         if (optionalNotification.isPresent()) {
             Notification notification = optionalNotification.get();
             notification.setMessage(updatedNotificationDto.getMessage());
-            User user = userRepository.findById(updatedNotificationDto.getIdUser()).get();
+           // User user = userRepository.findById(updatedNotificationDto.getIdUser()).get();
             Reservation reservation = reservationRepository.findById(updatedNotificationDto.getIdReservation()).get();
             notification.getUser().getNotificationList().remove(notification);
             notification.getReservation().getNotificationList().remove(notification);
             // Update associations
-            notification.setUser(user);
+            //notification.setUser(user);
             notification.setReservation(reservation);
             // Save the updated Notification object
             notification = notificationReppository.save(notification);
-            user.getNotificationList().add(notification);
+           // user.getNotificationList().add(notification);
             reservation.getNotificationList().add(notification);
-            userRepository.save(user);
+           // userRepository.save(user);
             reservationRepository.save(reservation);
             return notification;
         } else {

@@ -32,8 +32,6 @@ public class AnnonceCollocation implements Serializable {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     User user;
     @OneToMany
-    List<Reclamation> reclamationList;
-    @OneToMany
     List<Avis> avisList;
     @OneToOne
     Demande_visite demandeVisite;

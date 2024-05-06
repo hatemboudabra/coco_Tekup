@@ -37,7 +37,13 @@ public class AnnonceCovoiturageServiceImpl implements AnnonceCovoiturageService 
             nouvelleAnnonce.setLieu_fin(annonceCovoiturageDto.getLieu_fin());
             nouvelleAnnonce.setNbrePlaceDisponible(annonceCovoiturageDto.getNbrePlaceDisponible());
             nouvelleAnnonce.setTypeCovoiturage(annonceCovoiturageDto.getTypeCovoiturage());
-            User user = userRepository.findById(annonceCovoiturageDto.getIdUSEr()).get();
+        nouvelleAnnonce.setDepartLatitude(annonceCovoiturageDto.getDepartLatitude());
+    nouvelleAnnonce.setDepartLongitude(annonceCovoiturageDto.getDepartLongitude());
+        nouvelleAnnonce.setDestinationLatitude(annonceCovoiturageDto.getDestinationLatitude());
+        nouvelleAnnonce.setDestinationLongitude(annonceCovoiturageDto.getDestinationLongitude());
+
+
+        User user = userRepository.findById(annonceCovoiturageDto.getIdUSEr()).get();
             nouvelleAnnonce.setUser(user);
             annonceCovoiturageRepo.save(nouvelleAnnonce);
 

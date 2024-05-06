@@ -16,6 +16,10 @@ public class AnnonceCovoiturageDto {
     private String lieu_fin ;
     private String lieu_depart;
     private Long nbrePlaceDisponible;
+    private float departLatitude;
+    private float  departLongitude;
+    private float destinationLatitude;
+    private float  destinationLongitude;
     private Type_Covoiturage typeCovoiturage;
     private Long idUSEr;
     // private Long reservationId;

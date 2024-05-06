@@ -1,5 +1,6 @@
 package com.tekup.coco.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Data @NoArgsConstructor @AllArgsConstructor
 @Entity
@@ -24,10 +26,11 @@ public class User implements Serializable {
     @JoinTable(name="user_role",joinColumns = @JoinColumn(name="user_id") ,
             inverseJoinColumns = @JoinColumn(name="role_id"))
     private List<Role> roles;
-    @OneToOne
-    private Message message;
-    @OneToMany
-     List<Reclamation> reclamationList ;
+   // @OneToOne
+    //private Message message;
+   @OneToMany(mappedBy = "user")
+   @JsonIgnore
+   private Set<Reclamation> claims;
     @OneToMany
     private List<AnnonceCovoiturage> annonceCovoiturageList = new ArrayList<>();
 
@@ -45,5 +48,10 @@ public class User implements Serializable {
         this.roles = roles;
     }
 
-
+    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Chatrromassistance> joinedchatrooms;
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private   List<Chatrromassistance>myrooms;
 }
