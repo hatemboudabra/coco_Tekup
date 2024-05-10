@@ -25,6 +25,7 @@ public class Reclamation implements Serializable {
     private String description;
     @Enumerated(EnumType.STRING)
     private TypeClaim typeClaim;
+
     @Enumerated(EnumType.STRING)
     private Status statusClaims;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
