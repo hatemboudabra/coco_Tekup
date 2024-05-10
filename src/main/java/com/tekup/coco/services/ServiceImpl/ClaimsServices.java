@@ -27,17 +27,18 @@ public class ClaimsServices  implements ClaimService {
     private MessageSendingOperations<String> wsTemplate;
     @Override
     public Reclamation addClaims( Reclamation claims) {
-        Optional<User> u=UserRepository.findById(claims.getUser().getId());
-        if(u.isPresent()){
+        //Optional<User> u=UserRepository.findById(claims.getUser().getId());
+        //if(u.isPresent()){
 
-            claims.setUser(u.get());
-            claims.setCreatedAt(LocalDateTime.now());
-            claims.setStatusClaims(Status.valueOf("Pending"));
-            wsTemplate.convertAndSend("/topic/notification/" ,  u.get().getUsername()+" a ajouté une nouvelle reclamtion");
+           // claims.setUser(u.get());
+          //  claims.setCreatedAt(LocalDateTime.now());
+          // claims.setStatusClaims(Status.valueOf("Pending"));
+         //   wsTemplate.convertAndSend("/topic/notification/" ,  u.get().getUsername()+" a ajouté une nouvelle reclamtion");
 
-            return claimsRepository.save(claims);}
-        return null;
+            return claimsRepository.save(claims);
     }
+       // return null;
+   // }
     @Override
     public Reclamation getClaimsById(Integer id) {
         Reclamation getRec =claimsRepository.findById(id).orElse(null);

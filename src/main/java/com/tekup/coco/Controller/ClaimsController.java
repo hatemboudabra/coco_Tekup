@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class ClaimsController {
     @Autowired
     ClaimsServices claimService;
 
     @PostMapping("/addClaim")
-    @CrossOrigin(origins = "http://localhost:4200")
-    public Reclamation AddClaim(@RequestBody Reclamation claims) {
+    //@CrossOrigin(origins = "http://localhost:4200")
+    public Reclamation AddClaim( Reclamation claims) {
 
         return claimService.addClaims(claims);
 
