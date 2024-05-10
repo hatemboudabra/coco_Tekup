@@ -29,7 +29,7 @@ public class User implements Serializable {
    // @OneToOne
     //private Message message;
    @OneToMany(mappedBy = "user")
-   @JsonIgnore
+ //  @JsonIgnore
    private Set<Reclamation> claims;
     @OneToMany
     private List<AnnonceCovoiturage> annonceCovoiturageList = new ArrayList<>();

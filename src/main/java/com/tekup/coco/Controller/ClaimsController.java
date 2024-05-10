@@ -18,8 +18,7 @@ public class ClaimsController {
 
     @PostMapping("/addClaim")
     //@CrossOrigin(origins = "http://localhost:4200")
-    public Reclamation AddClaim( Reclamation claims) {
-
+    public Reclamation AddClaim(@RequestBody Reclamation claims) {
         return claimService.addClaims(claims);
 
     }
