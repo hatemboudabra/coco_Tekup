@@ -2,35 +2,35 @@ package com.tekup.coco.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tekup.coco.entity.enummeration.Status;
+import com.tekup.coco.entity.enummeration.TypeClaim;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Data
-@Table(name = "Reclamation")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Reclamation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String text_recl;
+    @Column(name = "idClaims")
+    private Integer idClaims;
+    private String title;
+    private String otherDetails;
+    private String description;
+    @Enumerated(EnumType.STRING)
+    private TypeClaim typeClaim;
+    @Enumerated(EnumType.STRING)
+    private Status statusClaims;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime CreatedAt;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime   ConsultAt;
-    @Enumerated(EnumType.STRING)
-    @Column(length = 20)
-    private Status type_reclamation;
     @ManyToOne
-    @JoinColumn(name = "iduser")
     private User user;
-    @ManyToOne
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    AnnonceCovoiturage annonceCovoiturage;
-    @ManyToOne
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    AnnonceCollocation annonceCollocation;
 }

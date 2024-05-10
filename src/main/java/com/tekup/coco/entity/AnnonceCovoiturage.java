@@ -21,6 +21,10 @@ public class AnnonceCovoiturage implements Serializable {
     private String Lieu_depart;
     private String lieu_fin ;
     private Long nbrePlaceDisponible;
+    private float departLatitude;
+    private float  departLongitude;
+    private float destinationLatitude;
+    private float  destinationLongitude;
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     private Type_Covoiturage typeCovoiturage;
@@ -30,7 +34,6 @@ public class AnnonceCovoiturage implements Serializable {
     @ManyToOne()
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     Reservation reservation;
-    @OneToMany()
-    List<Reclamation> reclamationList;
+
 
 }
