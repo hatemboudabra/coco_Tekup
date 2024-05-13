@@ -39,8 +39,8 @@ public class SecurityConfig {
                     }
                 }))
 
-                .authorizeRequests(requests -> requests
-                        .anyRequest().permitAll())
+                .authorizeRequests(requests -> requests.requestMatchers("/login","/register")
+                        .permitAll())
                 .addFilterBefore(new JWTAuthenticationFilter(authenticationMgr),
                         UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JWTAuthorizationFilter(),

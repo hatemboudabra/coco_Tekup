@@ -1,7 +1,6 @@
 package com.tekup.coco.services.ServiceImpl;
 
 import com.tekup.coco.Dto.ReclamationDto;
-import com.tekup.coco.entity.Message;
 import com.tekup.coco.entity.Reclamation;
 import com.tekup.coco.entity.User;
 import com.tekup.coco.entity.enummeration.Status;
@@ -9,37 +8,42 @@ import com.tekup.coco.entity.enummeration.TypeClaim;
 import com.tekup.coco.repository.ReclamationRepo;
 import com.tekup.coco.repository.UserRepo;
 import com.tekup.coco.services.ClaimService;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.messaging.core.MessageSendingOperations;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
-@AllArgsConstructor
 public class ClaimsServices  implements ClaimService {
+
+   private final   ReclamationRepo claimsRepository;
+    private final UserRepo UserRepository;
     @Autowired
-    ReclamationRepo claimsRepository;
-    UserRepo UserRepository;
-    private MessageSendingOperations<String> wsTemplate;
+    public ClaimsServices(ReclamationRepo claimsRepository, UserRepo userRepository) {
+        this.claimsRepository = claimsRepository;
+        UserRepository = userRepository;
+    }
+
     @Override
-    public Reclamation addClaims( Reclamation claims) {
-        Optional<User> u=UserRepository.findById(claims.getUser().getId());
-        if(u.isPresent()){
+    public ReclamationDto addClaims(ReclamationDto claims) {
+        Reclamation reclamation = new Reclamation();
+        reclamation.setTitle(claims.getTitle());
+        reclamation.setOtherDetails(claims.getOtherDetails());
+        reclamation.setDescription(claims.getDescription());
+        reclamation.setTypeClaim(claims.getTypeClaim());
+        reclamation.setStatusClaims(claims.getStatusClaims());
+        reclamation.setCreatedAt(claims.getCreatedAt());
+        reclamation.setConsultAt(claims.getConsultAt());
+        User user = UserRepository.findById(claims.getIduser()).get();
+        reclamation.setUser(user);
+        claimsRepository.save(reclamation);
+        return claims;
 
-            claims.setUser(u.get());
-           claims.setCreatedAt(LocalDateTime.now());
-        claims.setStatusClaims(Status.valueOf("Pending"));
-         //   wsTemplate.convertAndSend("/topic/notification/" ,  u.get().getUsername()+" a ajouté une nouvelle reclamtion");
+    }
 
-            return claimsRepository.save(claims);
-    }
-       return null;
-    }
     @Override
     public Reclamation getClaimsById(Integer id) {
         Reclamation getRec =claimsRepository.findById(id).orElse(null);
@@ -50,6 +54,7 @@ public class ClaimsServices  implements ClaimService {
     public List<Reclamation> GetClaims() {
         return claimsRepository.findAll();
     }
+
 
     public Page<Reclamation> getClaimsWithPagination(int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size);

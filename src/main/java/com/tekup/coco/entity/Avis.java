@@ -13,5 +13,5 @@ public class Avis implements Serializable {
     private Long id;
     private String commentaire;
     @ManyToOne
-    private AnnonceCollocation annonce;
+     AnnonceCollocation annonce;
 }

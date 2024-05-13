@@ -1,5 +1,6 @@
 package com.tekup.coco.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tekup.coco.entity.enummeration.Status;
 import com.tekup.coco.entity.enummeration.TypeClaim;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class Reclamation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,5 +35,7 @@ public class Reclamation implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime   ConsultAt;
     @ManyToOne
+   @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 }

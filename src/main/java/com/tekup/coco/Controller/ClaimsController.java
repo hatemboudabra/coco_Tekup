@@ -1,5 +1,6 @@
 package com.tekup.coco.Controller;
 
+import com.tekup.coco.Dto.ReclamationDto;
 import com.tekup.coco.entity.Reclamation;
 import com.tekup.coco.entity.enummeration.TypeClaim;
 import com.tekup.coco.services.ServiceImpl.ClaimsServices;
@@ -13,17 +14,19 @@ import java.util.Map;
 //@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class ClaimsController {
+
+    private final ClaimsServices claimService;
     @Autowired
-    ClaimsServices claimService;
+    public ClaimsController(ClaimsServices claimService) {
+        this.claimService = claimService;
+    }
 
-    @PostMapping("/addClaim")
-    //@CrossOrigin(origins = "http://localhost:4200")
-    public Reclamation AddClaim(@RequestBody Reclamation claims) {
+    @PostMapping("/addClaims")
+    public ReclamationDto addClaims(@RequestBody ReclamationDto claims) {
         return claimService.addClaims(claims);
-
     }
     @GetMapping("/GetALLClaims")
-    @CrossOrigin(origins = "http://localhost:4200")
+    //@CrossOrigin(origins = "http://localhost:4200")
     public List<Reclamation> GetALLClaims(){
         return claimService.GetClaims();
     }

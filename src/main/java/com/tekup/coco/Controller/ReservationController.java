@@ -20,8 +20,11 @@ public class ReservationController {
 
 
 
-    @PostMapping("/ajouter")
-    public ResponseEntity<String> ajouterReservation(@RequestParam Long annonceId, @RequestParam Long placesReservees) {
+    @PostMapping("/ajouter/{annonceId}/{placesReservees}")
+    public ResponseEntity<String> ajouterReservation(
+            @PathVariable("annonceId") Long annonceId,
+            @PathVariable("placesReservees") Long placesReservees
+    ) {
         reservationService.reserverAnnonce(annonceId, placesReservees);
         return ResponseEntity.ok("Annonce réservée avec succès.");
     }

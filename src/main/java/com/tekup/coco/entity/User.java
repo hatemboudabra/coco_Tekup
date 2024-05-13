@@ -29,11 +29,11 @@ public class User implements Serializable {
    // @OneToOne
     //private Message message;
    @OneToMany(mappedBy = "user")
- //  @JsonIgnore
    private Set<Reclamation> claims;
     @OneToMany
     private List<AnnonceCovoiturage> annonceCovoiturageList = new ArrayList<>();
-
+    @OneToMany
+    List<Demande_visite> demandeVisites = new ArrayList<>();
     @OneToMany
     private  List<AnnonceCollocation> annonceCollocationList;
     @OneToOne
@@ -52,6 +52,6 @@ public class User implements Serializable {
     @JsonIgnore
     private List<Chatrromassistance> joinedchatrooms;
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
-    @JsonIgnore
+    //@JsonIgnore
     private   List<Chatrromassistance>myrooms;
 }

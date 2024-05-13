@@ -1,5 +1,6 @@
 package com.tekup.coco.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tekup.coco.entity.enummeration.Type_Anno_Collo;
 import com.tekup.coco.entity.enummeration.Type_Logement;
@@ -7,8 +8,10 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -32,7 +35,8 @@ public class AnnonceCollocation implements Serializable {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     User user;
     @OneToMany
-    List<Avis> avisList;
-    @OneToOne
-    Demande_visite demandeVisite;
+    List<Avis> avisList = new ArrayList<>();
+    @OneToMany
+    //@JsonIgnore
+    List<Demande_visite> demandeVisite;
 }

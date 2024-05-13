@@ -11,6 +11,7 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +34,14 @@ public class UserRestController {
 
    }
     @GetMapping("/{username}")
-    public User getUserByUsername(@PathVariable String username) {
-        return userRepo.findByUsername(username);
+    public  Map<String, Object> getUserIdByUsername(@PathVariable String username) {
+        User user = userRepo.findByUsername(username);
+        Map<String, Object> response = new HashMap<>();
+        if (user != null) {
+            response.put("id", user.getId());
+        } else {
+            response.put("error", "User not found");
+        }
+        return response;
     }
 }
