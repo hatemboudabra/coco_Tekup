@@ -19,9 +19,12 @@ public class MessageChattrom {
     @JsonIgnore
     private  Chatrromassistance chatroom;
     @ManyToOne
+    @JsonIgnore
     private User user;
     @OneToOne(mappedBy = "message" ,cascade = CascadeType.ALL)
+
     private ReponseMessage reponse;
     @OneToMany(mappedBy = "msg" ,cascade = CascadeType.ALL)
+
     private List<ReactionMessage> reactions;
 }
