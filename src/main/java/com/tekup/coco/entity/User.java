@@ -52,6 +52,6 @@ public class User implements Serializable {
     @JsonIgnore
     private List<Chatrromassistance> joinedchatrooms;
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
-    //@JsonIgnore
+    @JsonIgnore
     private   List<Chatrromassistance>myrooms;
 }

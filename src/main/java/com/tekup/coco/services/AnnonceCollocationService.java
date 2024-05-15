@@ -12,5 +12,6 @@ public interface AnnonceCollocationService {
    List<AnnonceCollocation> getAllAnnonces();
    void deleteAnnonceById(Long id);
     Optional<AnnonceCollocation> getAnnonceById(Long id);
+    List<AnnonceCollocation> rechercherAnnoncesParUtilisateur(Long userId);
 
 }

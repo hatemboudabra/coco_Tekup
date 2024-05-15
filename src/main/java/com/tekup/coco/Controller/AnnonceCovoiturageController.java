@@ -54,8 +54,8 @@ public class AnnonceCovoiturageController {
         return annonceCovoiturageService.findByLieuDepart(lieuDepart);
     }
 
-    @GetMapping("/byUser")
-    public List<AnnonceCovoiturage> rechercherAnnoncesParUtilisateur(@RequestParam Long userId) {
+    @GetMapping("/byUser/{userId}") // Définissez l'ID utilisateur comme path parameter
+    public List<AnnonceCovoiturage> rechercherAnnoncesParUtilisateur(@PathVariable Long userId) {
         return annonceCovoiturageService.rechercherAnnoncesParUtilisateur(userId);
     }
 

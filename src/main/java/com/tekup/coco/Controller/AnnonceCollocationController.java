@@ -2,6 +2,7 @@ package com.tekup.coco.Controller;
 
 import com.tekup.coco.Dto.AnnonceCollocationDto;
 import com.tekup.coco.entity.AnnonceCollocation;
+import com.tekup.coco.entity.AnnonceCovoiturage;
 import com.tekup.coco.services.AnnonceCollocationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,7 +26,10 @@ public class AnnonceCollocationController {
         AnnonceCollocationDto annonceCollocation = annonceCollocationService.addAnnonce(annonceCollocationDto);
         return new ResponseEntity<>(annonceCollocation, HttpStatus.CREATED);
     }
-
+    @GetMapping("/CollocationbyUser/{userId}") // Définissez l'ID utilisateur comme path parameter
+    public List<AnnonceCollocation> rechercherAnnoncesParUtilisateur(@PathVariable Long userId) {
+        return annonceCollocationService.rechercherAnnoncesParUtilisateur(userId);
+    }
     @PutMapping("/update/{id}")
     public ResponseEntity<AnnonceCollocationDto> updateAnnonce(@PathVariable Long id, @RequestBody AnnonceCollocationDto annonceCollocationDto) {
         AnnonceCollocationDto updatedAnnonceCollocation = annonceCollocationService.updateAnnonce(id, annonceCollocationDto);

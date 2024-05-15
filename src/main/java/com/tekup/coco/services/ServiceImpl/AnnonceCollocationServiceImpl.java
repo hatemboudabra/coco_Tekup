@@ -2,6 +2,7 @@
 
     import com.tekup.coco.Dto.AnnonceCollocationDto;
     import com.tekup.coco.entity.AnnonceCollocation;
+    import com.tekup.coco.entity.AnnonceCovoiturage;
     import com.tekup.coco.entity.User;
     import com.tekup.coco.repository.AnnonceCollocationRepository;
     import com.tekup.coco.repository.UserRepo;
@@ -42,7 +43,9 @@
              annonceCollocationRepo.save(annonceCollocation);
              return annonceCollocationDto;
         }
-
+        public List<AnnonceCollocation> rechercherAnnoncesParUtilisateur(Long userId){
+            return annonceCollocationRepo.findAnnonceCollocationByUserId(userId);
+        }
 
         @Override
         public AnnonceCollocationDto updateAnnonce(Long id, AnnonceCollocationDto annonceCollocationDto) {
