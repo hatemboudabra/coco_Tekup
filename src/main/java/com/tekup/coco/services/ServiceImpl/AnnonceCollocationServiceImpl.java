@@ -36,15 +36,21 @@
             annonceCollocation.setNbre_person(annonceCollocationDto.getNbre_person());
             annonceCollocation.setTypeLogement(annonceCollocationDto.getTypeLogement());
             annonceCollocation.setTypeAnnoColloc(annonceCollocationDto.getTypeAnnoColloc());
-
+          //  annonceCollocation.setImageModels(annonceCollocationDto.getImageModels());
             User user = userRepo.findById(annonceCollocationDto.getUserId()).orElse(null);
             annonceCollocation.setUser(user);
 
              annonceCollocationRepo.save(annonceCollocation);
              return annonceCollocationDto;
         }
+
         public List<AnnonceCollocation> rechercherAnnoncesParUtilisateur(Long userId){
             return annonceCollocationRepo.findAnnonceCollocationByUserId(userId);
+        }
+
+        @Override
+        public AnnonceCollocation Add(AnnonceCollocation annonceCollocation) {
+            return annonceCollocationRepo.save(annonceCollocation);
         }
 
         @Override
