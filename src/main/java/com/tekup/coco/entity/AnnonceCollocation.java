@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tekup.coco.entity.enummeration.Type_Anno_Collo;
 import com.tekup.coco.entity.enummeration.Type_Logement;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,6 +15,10 @@ import java.util.Set;
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 @Table(name = "AnnonceCollocation")
 public class AnnonceCollocation implements Serializable {
     @Id
@@ -25,6 +29,17 @@ public class AnnonceCollocation implements Serializable {
     private String descrption;
     private Long Montant;
     private Long nbre_person;
+
+    public void setImageModels(Set<ImageModel> imageModels) {
+        this.imageModels = imageModels;
+    }
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "collocation_image",
+            joinColumns = @JoinColumn(name = "collocation_id"),
+            inverseJoinColumns = @JoinColumn(name = "image_id"))
+    private Set<ImageModel> imageModels;
+
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     private Type_Logement typeLogement;

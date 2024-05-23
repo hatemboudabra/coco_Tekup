@@ -13,5 +13,7 @@ public interface AnnonceCollocationService {
    void deleteAnnonceById(Long id);
     Optional<AnnonceCollocation> getAnnonceById(Long id);
     List<AnnonceCollocation> rechercherAnnoncesParUtilisateur(Long userId);
+    public AnnonceCollocation Add(AnnonceCollocation annonceCollocation);
+
 
 }
