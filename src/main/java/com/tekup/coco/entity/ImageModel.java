@@ -15,14 +15,12 @@ public class ImageModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String filePath;
-    @Lob // Annotation utilisée pour indiquer que la colonne stocke de grandes valeurs binaires
+    @Lob
     @Column(length = 999999999)
     private byte[] bytes;
 
-
-    public ImageModel(byte[] bytes, String name, String Type) {
-
+    public ImageModel(byte[] bytes, String filePath) {
         this.bytes = bytes;
-
+        this.filePath = filePath;
     }
 }

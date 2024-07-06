@@ -7,7 +7,10 @@ import com.tekup.coco.entity.ImageModel;
 import com.tekup.coco.services.AnnonceCollocationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +30,7 @@ import java.nio.file.Files;
 @RestController
 @RequestMapping("/annonces")
 //@Tag(name = "Collocation")
-
+@AllArgsConstructor
 public class AnnonceCollocationController {
     @Autowired
     private AnnonceCollocationService annonceCollocationService;
@@ -46,42 +49,55 @@ public class AnnonceCollocationController {
             Set<ImageModel> imageModelSet = uploadImage(file);
             annonceCollocation.setImageModels(imageModelSet);
             return annonceCollocationService.Add(annonceCollocation);
-
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
         }
     }
-    public Set<ImageModel> uploadImage(MultipartFile[] multipartFiles) throws IOException {
 
-        Set<ImageModel> imageModels=new HashSet<>();
-        for(MultipartFile file:multipartFiles){
+    public Set<ImageModel> uploadImage(MultipartFile[] multipartFiles) throws IOException {
+        Set<ImageModel> imageModels = new HashSet<>();
+        for (MultipartFile file : multipartFiles) {
             String fileName = StringUtils.cleanPath(file.getOriginalFilename());
             ImageModel imageModel = new ImageModel();
-            imageModel.setFilePath("C:\\xampp\\htdocs\\collocation\\" + fileName);
+            imageModel.setFilePath(fileName); // Store only the file name
             imageModel.setBytes(file.getBytes());
 
-            // Sauvegarder physiquement le fichier sur le système de fichiers
+            // Save image to the filesystem
             saveImageToFileSystem(file, fileName);
-            imageModels.add( imageModel);
+            imageModels.add(imageModel);
         }
         return imageModels;
     }
-    public void saveImageToFileSystem(MultipartFile file, String fileName) throws IOException {
-        String uploadDir = "C:\\xampp\\htdocs\\collocation\\"; // Chemin vers le dossier de destination
 
-        // Créer le dossier s'il n'existe pas déjà
+    // Ensure the saveImageToFileSystem method writes the file correctly
+    public void saveImageToFileSystem(MultipartFile file, String fileName) throws IOException {
+        String uploadDir = "C:/xampp/htdocs/collocation/"; // Ensure this path is correct
+
+        // Create the directory if it does not exist
         Path uploadPath = Paths.get(uploadDir);
         Files.createDirectories(uploadPath);
 
-        // Écrire le fichier sur le système de fichiers
+        // Write the file to the filesystem
         Path filePath = uploadPath.resolve(fileName);
         Files.write(filePath, file.getBytes());
     }
 
-
-
-
+    // Add a method to serve the image
+    @GetMapping("/getimage/{filename}")
+    public ResponseEntity<Resource> getImage(@PathVariable String filename) {
+        try {
+            Path file = Paths.get("C:/xampp/htdocs/collocation/").resolve(filename);
+            Resource resource = new UrlResource(file.toUri());
+            if (resource.exists() || resource.isReadable()) {
+                return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(resource);
+            } else {
+                throw new RuntimeException("Could not read the file!");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Could not read the file: " + filename, e);
+        }
+    }
 
 
 
